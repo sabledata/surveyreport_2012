@@ -1,0 +1,256 @@
+# Tables
+(ref:Table1Caption) Spatial strata allocation and completed strata counts (blue) for the `r yr` sablefish research and assessment survey.
+
+```{r table1, echo=FALSE}
+
+       Strata      <- c("S1 (South West Coast Vancouver Island or SWCVI)",
+                        "S2 (North West Coast Vancouver Island or NWCVI)",
+                        "S3 (Queen Charlotte Sound or QCS)",
+                        "S4 (South West Coast Haida Gwaii or SWCHG)",
+                        "S5 (North West Coast Haida Gwaii or NWCHG)",
+                        "Total ")
+       act.strata  <- paste("select Year, DEPTH_STRATUM, SPATIAL_STRATUM, COUNT([SET]) AS sets ",
+                           "from dbo.GFBIO_RESEARCH_TRIPS ",
+                           "group by Year, DEPTH_STRATUM, SPATIAL_STRATUM ",
+                           "having (Year = ", yr, " )", sep="")
+       #surv.strata <- GetSQLData(act.strata,"Sablefish")
+       #write.table(surv.strata, file = paste(path,"table01.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+       surv.strata <-  read.csv(paste(path,'table01.csv',sep=''), header=T)
+
+       RD1      <- c(6,6,8,6,6,32)
+       RD1fish  <- surv.strata$sets[surv.strata$DEPTH_STRATUM =="RD1"]
+       RD1fish[6]  <- sum(surv.strata$sets[surv.strata$DEPTH_STRATUM =="RD1"])
+       RD2fish  <- surv.strata$sets[surv.strata$DEPTH_STRATUM =="RD2"]
+       RD2fish[6]  <- sum(surv.strata$sets[surv.strata$DEPTH_STRATUM =="RD2"])
+       RD3fish  <- surv.strata$sets[surv.strata$DEPTH_STRATUM =="RD3"]
+       RD3fish[6]  <- sum(surv.strata$sets[surv.strata$DEPTH_STRATUM =="RD3"])     
+       RD2      <- c(8,7,6,6,7,34)
+       RD3      <- c(5,5,5,5,5,25)
+       Total    <- c(19,18,19,17,18,91)
+       Totfish  <- c(RD1fish[1]+RD2fish[1]+RD3fish[1], RD1fish[2]+RD2fish[2]+RD3fish[2],
+                     RD1fish[3]+RD2fish[3]+RD3fish[3], RD1fish[4]+RD2fish[4]+RD3fish[4],
+                     RD1fish[5]+RD2fish[5]+RD3fish[5], RD1fish[6]+RD2fish[6]+RD3fish[6]) # addition
+       dataf    <- data.frame(Strata, RD1, RD1fish, RD2, RD2fish,RD3, RD3fish, Total, Totfish) 
+       yrRD1    <- paste("RD1 ",yr,sep="")
+       yrRD2    <- paste("RD2 ",yr,sep="")
+       yrRD3    <- paste("RD3 ",yr,sep="")
+       yrTot    <- paste("Total ",yr,sep="")
+       
+       colnames(dataf) <- c("Spatia Strata", "RD1",yrRD1, "RD2",yrRD2,"RD3",yrRD3,"Total",yrTot)
+   
+       kableExtra::kable(dataf, booktabs = TRUE,linesep = "",
+                   format = "latex",
+                   caption = "(ref:Table1Caption)") %>%
+              row_spec(0,    bold = T) %>%
+              row_spec(5, hline_after = T) %>%
+              column_spec(2, width  = "0.5cm") %>%
+              column_spec(3, width  = "0.5cm", color="blue" ) %>%
+              column_spec(4, width  = "0.5cm") %>%
+              column_spec(5, width  = "0.5cm", color="blue") %>% 
+              column_spec(6, width  = "0.5cm") %>% 
+              column_spec(7, width  = "0.5cm", color="blue") %>%          
+              column_spec(8, width  = "0.7cm") %>%
+              column_spec(9, width  = "0.5cm", color="blue") %>% 
+              row_spec(0, color="black") %>%
+              row_spec(6, bold=T) %>%
+              add_header_above(c(" "= 1, "Depth Strata" = 6, " " = 2), bold=T) %>%
+       kableExtra::kable_styling(font_size = 10, position = "left",latex_options = "hold_position")
+  
+  
+```
+
+(ref:Table2Caption) Summary of species captured during the `r yr` survey StRS sets conducted by the `r boat`. No value in the weight column indicates that the catch was not weighed. No value in both weight and count indicates trace weights of less than 1 kg recorded.
+
+
+```{r table2,  echo=FALSE}
+
+    options(knitr.kable.NA = '')
+    dtSP   <- paste("exec procRReport_SpeciesSummary ",yr," ,'StRS'",sep="")
+    datSP  <- GetSQLData(dtSP,"Sablefish")
+    write.table(datSP, file = paste(path,"table02.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+    datSP  <-  read.csv(paste(path,'table02.csv',sep=''), header=T)
+       
+    dat1SP <- datSP[,c(-1)] 
+    dat1SP <- dat1SP[,c(-3)]
+    dat1SP <- dat1SP[,c(-2)]
+    dat1SP <- dat1SP[,c(-6)]  # trim columns
+    cleandataSP<-dat1SP
+    cleandataSP$Summary_sp <- cleanf(cleandataSP$Summary_sp)  #  remove duplicates function
+    colnames(cleandataSP)  <- c( "Category", "Common Name", "Scientific Name" , "Count", "Weight(kg)")
+    
+    kableExtra::kable(cleandataSP,
+                      booktabs = TRUE,linesep = "",
+                      format = "latex",  caption = "(ref:Table2Caption)") %>%
+                      row_spec(0,    bold = T) %>%
+                      row_spec(10,  hline_after = T) %>%
+                      row_spec(17,  hline_after = T) %>%
+                      row_spec(21,  hline_after = T) %>%
+                      kableExtra::kable_styling(font_size = 8, position = "left",
+                                                latex_options = "hold_position")
+```
+
+
+(ref:Table3Caption) Summary of sablefish fork length measurements collected during the `r yr` stratified random sets by spatial and depth stratum.
+
+```{r table3, echo=FALSE}
+
+    #newdata2   <-   rbind(newdata,biosumm)
+    newdata2    <-   newdata  # created in results section
+
+    kableExtra::kable(newdata2, row.names = FALSE,
+                booktabs = TRUE,   linesep = "",
+                format = "latex",  caption = "(ref:Table3Caption)") %>% 
+    add_header_above(c("Depth Strata/Locality"= 2,
+                        "Proportion" = 2, 
+                        "Mean Fork Length (mm)" = 3),bold=T) %>%
+      
+    kableExtra::kable_styling(font_size = 9, position = "left", latex_options = "hold_position") %>%
+                row_spec(0,    bold = T) %>%
+                row_spec(3,    hline_after = T) %>%
+                row_spec(4,    bold = T, hline_after = T) %>%
+                row_spec(7,    hline_after = T) %>% 
+                row_spec(8,    bold = T, hline_after = T) %>%      
+                row_spec(11,   hline_after = T) %>%
+                row_spec(12,   bold = T, hline_after = T) %>%      
+                row_spec(15,   hline_after = T)   %>% 
+                row_spec(16,   bold = T, hline_after = T) %>%   
+                row_spec(19,   hline_after = T)   %>% 
+                row_spec(20,   bold = T)
+      
+```
+
+(ref:Table4Caption) Sablefish tag recovery counts by distance from release site and years at liberty before re-release for the 2020 survey. Distances were determined using the great circle distance between the survey release location and survey recovery location.
+
+
+```{r table4, echo=FALSE}
+
+       # in('A00545713','A00984002','A00254854') 3 tags re-released twice
+       # in('A00733036','A00315966','A00550705')
+      # in('A00545713','A00984002','A00254854','A00733036','A00315966','A00550705') 
+
+      tag  <- paste("select * from Report_Survey_Tag_Recoveries",sep="") # have to go in database and change the year value
+      #tag.rec <- GetSQLData(tag,"FishTag")
+      #write.table(tag.rec, file = paste(path,"table4.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+      tag.rec <-  read.csv(paste(path,'table4.csv',sep=''), header=T)
+      
+      tag.rec[is.na(tag.rec)] <- 0   # convert NA to zero in whole table
+      tag.rec$YearGroups      <- as.character(tag.rec$YearGroups)  # change column to character
+      tag.rec$YearGroups      <- gsub("Grp1.", "", tag.rec$YearGroups)
+      tag.rec$YearGroups      <- gsub("Grp2.", "", tag.rec$YearGroups)
+      tag.rec$YearGroups      <- gsub("Grp3.", "", tag.rec$YearGroups)  
+      tag.rec$YearGroups      <- gsub("Grp4.", "", tag.rec$YearGroups)      
+      tag.rec$Recoveries      <- as.numeric(rowSums(tag.rec[,2:8], na.rm=TRUE))
+      
+      ad.row <- c('Total Counts',sum(tag.rec$X.10.km),sum(tag.rec$X11.50.km),sum(tag.rec$X51.100.km),
+                          sum(tag.rec$X101.250.km),sum(tag.rec$X251.500.km),sum(tag.rec$X501.1000.km),
+                          sum(tag.rec$X.1000.km), sum(tag.rec$Recoveries) )
+      tag.rec2 <- rbind(tag.rec,ad.row) 
+
+      names(tag.rec2) <- c("Years at Liberty","<10","11-50","51-100","101-250","251-500","501-1000","1000+","Recovery count")
+   
+      kableExtra::kable(tag.rec2, row.names = FALSE,
+                booktabs = TRUE,   linesep = "",
+                format = "latex",  caption = "(ref:Table4Caption)") %>% 
+      add_header_above(c(" "= 1,
+                        "Distance (km) from Release Location" = 7, 
+                        " " = 1),bold=T) %>% 
+      
+       kableExtra::kable_styling(font_size = 9, position = "left", latex_options = "hold_position") %>%
+                row_spec(0,    bold = T) %>%
+                row_spec(4, hline_after = T) %>%
+                column_spec(2, width  = "1.1cm") 
+
+```
+\clearpage
+(ref:Table5Caption) Tag history of the events of three previously tagged sablefish recovered on the 2020 survey.
+
+```{r table5, echo=FALSE}
+
+      GIS1 <- paste("SELECT  get_tags3.TAG_ID, CONVERT(varchar, FISH_TAG_EVENTS_4.EVENT_DATE, 101) AS date1, FISH_TAG_EVENTS_4.EVENT_YEAR, dbo.EVENT_TYPE.EVENT_DESCRIPTION, FISH_TAG_EVENTS_4.EVENT_NUMBER, FISH_TAG_EVENTS_4.EVENT_TRIP,  dbo.FISH_STATE.RECOVERY_STATE_DESC, dbo.q_Fish_Tag_Lengths.Length, FISH_TAG_EVENTS_4.TAG_NUMBER,  FISH_TAG_EVENTS_4.PREVIOUS_TAG_NUMBER, FISH_TAG_EVENTS_4.FISH_EVENT_NUMBER,FISH_TAG_EVENTS_4.EVENT_SET,FISH_TAG_EVENTS_4.RECAPTURE_FISH_ID FROM  dbo.EVENT_TYPE RIGHT OUTER JOIN  (SELECT  TAG_ID, rfi   FROM   (SELECT   FISH_TAG_EVENTS_1.TAG_ID, QRY3.rfi  FROM   (SELECT  TAG_ID, CASE WHEN RECAPTURE_FISH_ID = 0 THEN - 99 ELSE ISNULL(RECAPTURE_FISH_ID, - 99) END AS rfi FROM   (SELECT   TAG_ID, RECAPTURE_FISH_ID  FROM   dbo.FISH_TAG_EVENTS WHERE  (TAG_NUMBER = N'A00315966')) AS QRY1 UNION  SELECT   TAG_ID, RECAPTURE_FISH_ID FROM    (SELECT   TAG_ID, RECAPTURE_FISH_ID  FROM dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_2 WHERE  (PREVIOUS_TAG_NUMBER = N'A00315966')) AS QRY2) AS QRY3 INNER JOIN dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_1 ON QRY3.rfi = FISH_TAG_EVENTS_1.RECAPTURE_FISH_ID GROUP BY FISH_TAG_EVENTS_1.TAG_ID, QRY3.rfi HAVING  (QRY3.rfi IS NOT NULL)) AS get_tags1  UNION SELECT  TAG_ID, RECAPTURE_FISH_ID FROM    (SELECT  FISH_TAG_EVENTS_1.TAG_ID, QRY3_1.RECAPTURE_FISH_ID FROM (SELECT TAG_ID, RECAPTURE_FISH_ID FROM   (SELECT   TAG_ID, RECAPTURE_FISH_ID FROM   dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_3 WHERE    (TAG_NUMBER = N'A00315966')) AS QRY1_1 UNION SELECT   TAG_ID, RECAPTURE_FISH_ID   FROM   (SELECT     TAG_ID, RECAPTURE_FISH_ID FROM   dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_2 WHERE  (PREVIOUS_TAG_NUMBER = N'A00315966')) AS QRY2_1) AS QRY3_1 INNER JOIN dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_1 ON QRY3_1.TAG_ID = FISH_TAG_EVENTS_1.TAG_ID GROUP BY FISH_TAG_EVENTS_1.TAG_ID, QRY3_1.RECAPTURE_FISH_ID  HAVING (QRY3_1.RECAPTURE_FISH_ID IS NULL)) AS get_tags2) AS get_tags3 INNER JOIN  dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_4 ON get_tags3.TAG_ID = FISH_TAG_EVENTS_4.TAG_ID ON dbo.EVENT_TYPE.EVENT_TYPE = FISH_TAG_EVENTS_4.EVENT_TYPE LEFT OUTER JOIN dbo.FISH_STATE RIGHT OUTER JOIN dbo.FISH_TAG_REC_SPECS ON dbo.FISH_STATE.RECOVERY_STATE_CODE = dbo.FISH_TAG_REC_SPECS.RECOVERY_STATE ON FISH_TAG_EVENTS_4.TAG_ID = dbo.FISH_TAG_REC_SPECS.TAG_ID LEFT OUTER JOIN dbo.q_Fish_Tag_Lengths ON FISH_TAG_EVENTS_4.TAG_ID = dbo.q_Fish_Tag_Lengths.TAG_ID ORDER BY FISH_TAG_EVENTS_4.EVENT_YEAR, FISH_TAG_EVENTS_4.FISH_EVENT_NUMBER,date1 ", sep="")   # for 2020 only
+ GIS2 <- paste("SELECT  get_tags3.TAG_ID, CONVERT(varchar, FISH_TAG_EVENTS_4.EVENT_DATE, 101) AS date1, FISH_TAG_EVENTS_4.EVENT_YEAR, dbo.EVENT_TYPE.EVENT_DESCRIPTION, FISH_TAG_EVENTS_4.EVENT_NUMBER, FISH_TAG_EVENTS_4.EVENT_TRIP,  dbo.FISH_STATE.RECOVERY_STATE_DESC, dbo.q_Fish_Tag_Lengths.Length, FISH_TAG_EVENTS_4.TAG_NUMBER,  FISH_TAG_EVENTS_4.PREVIOUS_TAG_NUMBER, FISH_TAG_EVENTS_4.FISH_EVENT_NUMBER,FISH_TAG_EVENTS_4.EVENT_SET,FISH_TAG_EVENTS_4.RECAPTURE_FISH_ID FROM  dbo.EVENT_TYPE RIGHT OUTER JOIN  (SELECT  TAG_ID, rfi   FROM   (SELECT   FISH_TAG_EVENTS_1.TAG_ID, QRY3.rfi  FROM   (SELECT  TAG_ID, CASE WHEN RECAPTURE_FISH_ID = 0 THEN - 99 ELSE ISNULL(RECAPTURE_FISH_ID, - 99) END AS rfi FROM   (SELECT   TAG_ID, RECAPTURE_FISH_ID  FROM   dbo.FISH_TAG_EVENTS WHERE  (TAG_NUMBER = N'A00550705')) AS QRY1 UNION  SELECT   TAG_ID, RECAPTURE_FISH_ID FROM    (SELECT   TAG_ID, RECAPTURE_FISH_ID  FROM dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_2 WHERE  (PREVIOUS_TAG_NUMBER = N'A00550705')) AS QRY2) AS QRY3 INNER JOIN dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_1 ON QRY3.rfi = FISH_TAG_EVENTS_1.RECAPTURE_FISH_ID GROUP BY FISH_TAG_EVENTS_1.TAG_ID, QRY3.rfi HAVING  (QRY3.rfi IS NOT NULL)) AS get_tags1  UNION SELECT  TAG_ID, RECAPTURE_FISH_ID FROM    (SELECT  FISH_TAG_EVENTS_1.TAG_ID, QRY3_1.RECAPTURE_FISH_ID FROM (SELECT TAG_ID, RECAPTURE_FISH_ID FROM   (SELECT   TAG_ID, RECAPTURE_FISH_ID FROM   dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_3 WHERE    (TAG_NUMBER = N'A00550705')) AS QRY1_1 UNION SELECT   TAG_ID, RECAPTURE_FISH_ID   FROM   (SELECT     TAG_ID, RECAPTURE_FISH_ID FROM   dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_2 WHERE  (PREVIOUS_TAG_NUMBER = N'A00550705')) AS QRY2_1) AS QRY3_1 INNER JOIN dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_1 ON QRY3_1.TAG_ID = FISH_TAG_EVENTS_1.TAG_ID GROUP BY FISH_TAG_EVENTS_1.TAG_ID, QRY3_1.RECAPTURE_FISH_ID  HAVING (QRY3_1.RECAPTURE_FISH_ID IS NULL)) AS get_tags2) AS get_tags3 INNER JOIN  dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_4 ON get_tags3.TAG_ID = FISH_TAG_EVENTS_4.TAG_ID ON dbo.EVENT_TYPE.EVENT_TYPE = FISH_TAG_EVENTS_4.EVENT_TYPE LEFT OUTER JOIN dbo.FISH_STATE RIGHT OUTER JOIN dbo.FISH_TAG_REC_SPECS ON dbo.FISH_STATE.RECOVERY_STATE_CODE = dbo.FISH_TAG_REC_SPECS.RECOVERY_STATE ON FISH_TAG_EVENTS_4.TAG_ID = dbo.FISH_TAG_REC_SPECS.TAG_ID LEFT OUTER JOIN dbo.q_Fish_Tag_Lengths ON FISH_TAG_EVENTS_4.TAG_ID = dbo.q_Fish_Tag_Lengths.TAG_ID ORDER BY FISH_TAG_EVENTS_4.EVENT_YEAR, FISH_TAG_EVENTS_4.FISH_EVENT_NUMBER,date1 ", sep="")   # for 2020 only
+GIS3 <- paste("SELECT  get_tags3.TAG_ID, CONVERT(varchar, FISH_TAG_EVENTS_4.EVENT_DATE, 101) AS date1, FISH_TAG_EVENTS_4.EVENT_YEAR, dbo.EVENT_TYPE.EVENT_DESCRIPTION, FISH_TAG_EVENTS_4.EVENT_NUMBER, FISH_TAG_EVENTS_4.EVENT_TRIP,  dbo.FISH_STATE.RECOVERY_STATE_DESC, dbo.q_Fish_Tag_Lengths.Length, FISH_TAG_EVENTS_4.TAG_NUMBER,  FISH_TAG_EVENTS_4.PREVIOUS_TAG_NUMBER, FISH_TAG_EVENTS_4.FISH_EVENT_NUMBER,FISH_TAG_EVENTS_4.EVENT_SET,FISH_TAG_EVENTS_4.RECAPTURE_FISH_ID FROM  dbo.EVENT_TYPE RIGHT OUTER JOIN  (SELECT  TAG_ID, rfi   FROM   (SELECT   FISH_TAG_EVENTS_1.TAG_ID, QRY3.rfi  FROM   (SELECT  TAG_ID, CASE WHEN RECAPTURE_FISH_ID = 0 THEN - 99 ELSE ISNULL(RECAPTURE_FISH_ID, - 99) END AS rfi FROM   (SELECT   TAG_ID, RECAPTURE_FISH_ID  FROM   dbo.FISH_TAG_EVENTS WHERE  (TAG_NUMBER = N'A00733036')) AS QRY1 UNION  SELECT   TAG_ID, RECAPTURE_FISH_ID FROM    (SELECT   TAG_ID, RECAPTURE_FISH_ID  FROM dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_2 WHERE  (PREVIOUS_TAG_NUMBER = N'A00733036')) AS QRY2) AS QRY3 INNER JOIN dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_1 ON QRY3.rfi = FISH_TAG_EVENTS_1.RECAPTURE_FISH_ID GROUP BY FISH_TAG_EVENTS_1.TAG_ID, QRY3.rfi HAVING  (QRY3.rfi IS NOT NULL)) AS get_tags1  UNION SELECT  TAG_ID, RECAPTURE_FISH_ID FROM    (SELECT  FISH_TAG_EVENTS_1.TAG_ID, QRY3_1.RECAPTURE_FISH_ID FROM (SELECT TAG_ID, RECAPTURE_FISH_ID FROM   (SELECT   TAG_ID, RECAPTURE_FISH_ID FROM   dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_3 WHERE    (TAG_NUMBER = N'A00733036')) AS QRY1_1 UNION SELECT   TAG_ID, RECAPTURE_FISH_ID   FROM   (SELECT     TAG_ID, RECAPTURE_FISH_ID FROM   dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_2 WHERE  (PREVIOUS_TAG_NUMBER = N'A00733036')) AS QRY2_1) AS QRY3_1 INNER JOIN dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_1 ON QRY3_1.TAG_ID = FISH_TAG_EVENTS_1.TAG_ID GROUP BY FISH_TAG_EVENTS_1.TAG_ID, QRY3_1.RECAPTURE_FISH_ID  HAVING (QRY3_1.RECAPTURE_FISH_ID IS NULL)) AS get_tags2) AS get_tags3 INNER JOIN  dbo.FISH_TAG_EVENTS AS FISH_TAG_EVENTS_4 ON get_tags3.TAG_ID = FISH_TAG_EVENTS_4.TAG_ID ON dbo.EVENT_TYPE.EVENT_TYPE = FISH_TAG_EVENTS_4.EVENT_TYPE LEFT OUTER JOIN dbo.FISH_STATE RIGHT OUTER JOIN dbo.FISH_TAG_REC_SPECS ON dbo.FISH_STATE.RECOVERY_STATE_CODE = dbo.FISH_TAG_REC_SPECS.RECOVERY_STATE ON FISH_TAG_EVENTS_4.TAG_ID = dbo.FISH_TAG_REC_SPECS.TAG_ID LEFT OUTER JOIN dbo.q_Fish_Tag_Lengths ON FISH_TAG_EVENTS_4.TAG_ID = dbo.q_Fish_Tag_Lengths.TAG_ID ORDER BY FISH_TAG_EVENTS_4.EVENT_YEAR, FISH_TAG_EVENTS_4.FISH_EVENT_NUMBER,date1 ", sep="")   # for 2020 only
+      
+      
+      #GIS1.tag.rec <- GetSQLData(GIS1,"FishTag")
+      #GIS2.tag.rec <- GetSQLData(GIS2,"FishTag")
+      #GIS3.tag.rec <- GetSQLData(GIS3,"FishTag")
+      #GIS.tag.rec  <- rbind(GIS2.tag.rec, GIS1.tag.rec, GIS3.tag.rec)
+      #write.table(GIS.tag.rec, file = paste(path,"table4b.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+      GIS.tag.rec <-  read.csv(paste(path,'table4b.csv',sep=''), header=T)
+      GIS.tag.rec <-  GIS.tag.rec[,c(-1,-11,-13)]
+      GIS.tag.rec$RECOVERY_STATE_DESC <- " LIVE, RE-RELEASED"
+      GIS.tag.rec2 <-  GIS.tag.rec[ , c("TAG_NUMBER", "PREVIOUS_TAG_NUMBER", "EVENT_DESCRIPTION","EVENT_NUMBER", "EVENT_TRIP","EVENT_SET","EVENT_YEAR",
+                                        "date1","RECOVERY_STATE_DESC", "Length")]
+      
+      names(GIS.tag.rec2) <-   c("Release Tag number", "Previous Tag number", "Event","Event no.","Event Trip","Event Set","Event year",
+                                 "Date","Fish State", "Length (mm)")
+      GIS.tag.rec2 <- GIS.tag.rec2[GIS.tag.rec2$Event=='RELEASE',]
+      
+ 
+      kableExtra::kable(GIS.tag.rec2, row.names = FALSE,
+                booktabs = TRUE,   linesep = "",
+                format = "latex",  caption = "(ref:Table5Caption)") %>% 
+ 
+       kableExtra::kable_styling(font_size = 9, position = "left", latex_options = "hold_position") %>%
+                row_spec(0,    bold = T) %>%
+                row_spec(3, hline_after = T) %>%
+                row_spec(6, hline_after = T) %>%
+                column_spec(1, width  = "1.7cm")  %>%
+                column_spec(2, width  = "1.7cm")  %>%
+                column_spec(3, width  = "1.1cm")  %>%
+                column_spec(4, width  = "0.7cm")  %>%
+                column_spec(5, width  = "0.7cm")  %>%
+                column_spec(6, width  = "0.7cm")  %>%  
+                column_spec(7, width  = "0.7cm")  %>% 
+                column_spec(8, width  = "0.7cm")  %>%   
+                column_spec(8, width  = "1.3cm")  %>%  
+                column_spec(9, width  = "3.2cm")  %>%  
+                column_spec(10, width  = "0.7cm")          
+```
+```{r table5, echo=FALSE}
+
+
+
+
+query  <- "SELECT        YEAR, BEST_YEAR, FISHERY_SECTOR, GEAR, SUM(C1_RETAINED_ROUND_KG) AS Expr1, SUM(C2_SUBLEGAL_BAIT_KG) AS Expr2, SUM(C3_LEGAL_BAIT_KG) AS Expr3, SUM(C4_RETAINED_OTHER_KG) AS Expr4, 
+                         SUM(R1_SUBLEGAL_RELEASED_KG) AS Expr5, SUM(R2_LEGAL_RELEASED_KG) AS Expr6, SUM(R2_LEGAL_RELEASED_MORT_KG) AS Expr7, SUM(R3_SUBLEGAL_LICED_KG) AS Expr8, SUM(R4_LEGAL_LICED_KG) AS Expr9, 
+                         SUM(C_TOTAL_RETAINED_KG) AS Expr10, SUM(R_TOTAL_RELEASED_KG) AS Expr11
+FROM            dbo.gfsh_sablefish_official_catch_report
+GROUP BY YEAR, BEST_YEAR, FISHERY_SECTOR, GEAR
+HAVING        (BEST_YEAR = 2015)"
+
+query <- GetSQLData(query1,"FishTag")
+write.table(query, file = paste(path,"table4b.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+
+```
+
+\clearpage
+
+\clearpage
+(ref:Table6Caption) List of the North Pacific spiny dogfish tagged with pop-off satellite tags. The tube label and tag number identify the dogfish.  The GFBIO specimen identifier is included for database reference.
+
+```{r table6, echo=FALSE}
+
+query  <- "SELECT   DATENAME(mm,GFBioSQL.dbo.SAMPLE.SAMPLE_DATE) + ' '+ cast(day(GFBioSQL.dbo.SAMPLE.SAMPLE_DATE) as varchar) +','+ cast(year(GFBioSQL.dbo.SAMPLE.SAMPLE_DATE) as varchar) as Date, GFBioSQL.dbo.FISHING_EVENT.FE_MAJOR_LEVEL_ID as [Set], GFBioSQL.dbo.SPECIMEN.PRIMARY_TAG_NUMBER AS [Tube label - tag number], 
+                        GFBioSQL.dbo.SPECIMEN_MORPHOMETRICS.SPECIMEN_MORPHOMETRICS_VALUE AS [Precaudal length (mm)],LEFT(MAJOR_STAT_AREA_1.MAJOR_STAT_AREA_NAME, 2) AS [Release Area], GFBioSQL.dbo.SPECIMEN.SPECIMEN_ID as [GFBio Specimen id] 
+FROM            GFBioSQL.dbo.TRIP INNER JOIN
+                         GFBioSQL.dbo.FISHING_EVENT ON GFBioSQL.dbo.TRIP.TRIP_ID = GFBioSQL.dbo.FISHING_EVENT.TRIP_ID INNER JOIN
+                         GFBioSQL.dbo.FISHING_EVENT_CATCH ON GFBioSQL.dbo.FISHING_EVENT.FISHING_EVENT_ID = GFBioSQL.dbo.FISHING_EVENT_CATCH.FISHING_EVENT_ID INNER JOIN
+                         GFBioSQL.dbo.CATCH ON GFBioSQL.dbo.FISHING_EVENT_CATCH.CATCH_ID = GFBioSQL.dbo.CATCH.CATCH_ID INNER JOIN
+                         GFBioSQL.dbo.MAJOR_STAT_AREA ON GFBioSQL.dbo.FISHING_EVENT.MAJOR_STAT_AREA_CODE = GFBioSQL.dbo.MAJOR_STAT_AREA.MAJOR_STAT_AREA_CODE INNER JOIN
+                         GFBioSQL.dbo.CATCH_SAMPLE ON GFBioSQL.dbo.CATCH.CATCH_ID = GFBioSQL.dbo.CATCH_SAMPLE.CATCH_ID INNER JOIN
+                         GFBioSQL.dbo.SAMPLE ON GFBioSQL.dbo.CATCH_SAMPLE.SAMPLE_ID = GFBioSQL.dbo.SAMPLE.SAMPLE_ID INNER JOIN
+                         GFBioSQL.dbo.SPECIMEN ON GFBioSQL.dbo.SAMPLE.SAMPLE_ID = GFBioSQL.dbo.SPECIMEN.SAMPLE_ID INNER JOIN
+                         GFBioSQL.dbo.MAJOR_STAT_AREA AS MAJOR_STAT_AREA_1 ON GFBioSQL.dbo.FISHING_EVENT.MAJOR_STAT_AREA_CODE = MAJOR_STAT_AREA_1.MAJOR_STAT_AREA_CODE INNER JOIN
+                         GFBioSQL.dbo.SPECIMEN_MORPHOMETRICS ON GFBioSQL.dbo.SPECIMEN.SPECIMEN_ID = GFBioSQL.dbo.SPECIMEN_MORPHOMETRICS.SPECIMEN_ID
+WHERE        (GFBioSQL.dbo.FISHING_EVENT.FE_SUB_LEVEL_ID IS NULL)
+GROUP BY YEAR(GFBioSQL.dbo.TRIP.TRIP_START_DATE), GFBioSQL.dbo.TRIP.TRIP_ID, GFBioSQL.dbo.FISHING_EVENT.FE_MAJOR_LEVEL_ID, GFBioSQL.dbo.CATCH.SPECIES_CODE, 
+                         GFBioSQL.dbo.SPECIMEN.PRIMARY_TAG_NUMBER, GFBioSQL.dbo.FISHING_EVENT.FISHING_EVENT_ID, GFBioSQL.dbo.CATCH.CATCH_ID, GFBioSQL.dbo.SAMPLE.SAMPLE_ID, GFBioSQL.dbo.SPECIMEN.SPECIMEN_ID, 
+                         GFBioSQL.dbo.SAMPLE.SAMPLE_DATE, GFBioSQL.dbo.SPECIMEN_MORPHOMETRICS.SPECIMEN_MORPHOMETRICS_VALUE, LEFT(MAJOR_STAT_AREA_1.MAJOR_STAT_AREA_NAME, 2)
+HAVING        (GFBioSQL.dbo.CATCH.SPECIES_CODE = '044') AND (GFBioSQL.dbo.TRIP.TRIP_ID = 73190) AND (NOT (GFBioSQL.dbo.SPECIMEN.PRIMARY_TAG_NUMBER IS NULL))
+ORDER BY GFBioSQL.dbo.FISHING_EVENT.FE_MAJOR_LEVEL_ID"
+
+query <- GetSQLData(query1,"Sablefish")
+write.table(query, file = paste(path,"table6.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+
+```

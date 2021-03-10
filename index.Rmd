@@ -1,0 +1,306 @@
+---
+title: "Summary of the annual 2012 sablefish (*Anoplopoma fimbria*) trap survey, October 9 - November 17, 2012 " 
+year: 2012
+report_number: nnn
+author: |
+  Lisa C. Lacko, 
+  Schon M. Acheson 
+author_list: "Lacko, L.C. and Acheson, S.M."
+region: Pacific Region
+isbn: ""
+address: |
+     Pacific Biological Station\
+     Fisheries and Oceans Canada, 3190 Hammond Bay Road\
+     Nanaimo, British Columbia, V9T 6N7, Canada\
+phone: "(250) 756-7000"
+author_footnote: "Email: Lisa.Lacko@dfo-mpo.gc.ca | telephone: (250) 756-7385"
+abstract: |
+  This document describes sampling activities and summarizes results from the 2012 British Columbia Sablefish research and assessment survey. It is intended to provide a historical reference for researchers and industry. This annual survey utilized the same sampling strategy as earlier years at stratified random (StRS) sites within depth-stratified areas.
+  
+  
+  The survey utilized the same three sampling strategies and longline trap gear used in surveys since 2003.  Sampling strategies included sampling at stratified random sites (StRS), traditional inlet sites, and one exploratory area. The random component included StRS sets at five depth-stratified areas and the traditional component included standardized sets at four inlet localities on the mainland. The exploratory component included two sets in a northern Vancouver Island inlet to evaluate Sablefish density and/or size compositions. A benthic impact study was also initiated where digital images were collected to assess the impact of longline trap gear on the benthic habitat.
+  
+  
+  
+  Biological sampling for sablefish included collection of length, weight, sex, maturity and age structures. Sablefish were randomly sampled from every third trap on all sets, up to  a maximum sample size of 60 sablefish. Biological samples (length, weight, sex, maturity, otoliths and genetic samples) were taken for rougheye/blackspotted rockfish species from catch in all traps.  The tag and release study has been conducted annually since 1991 and was continued in 2012. Sablefish were selected randomly for tag and release from every third trap up to a maximum of 125 fish. 
+  
+  In total, x sablefish were caught in 2012, of which x were used for biological samples and x were tagged and released.  Of those released, x were recaptured tagged fish.  x recaptured fish was retained for sampling and the remaining x were fitted with a new tag and released back into the water.  
+  
+  Catch rates are an important product from this survey. They that can be used to infer population trends, which are critical data elements used in stock assessment.  Catch rates from stratified random sets in the shallow depth stratum have shown a gradual decline from 2003 to 2009, increasing in 2010 and 2011 and decreasing in 2012. Catch rates in the middle depth stratum declined between 2003 and 2010, increased in 2011, and decreased in 2012. Catch rates from the deep depth stratum increased between 2003 and 2006, were variable in the preceding  three years and increased in both 2010 and 2011 and decreased again in 2012. Between 2008 and 2011, traditional standardized sets at mainland inlet locations showed a steady increase in catch rates, and in 2012, the catch rate dropped to 2010 levels.
+
+  
+abstract_other: |
+  Voici le résumé. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+output:
+ csasdown::techreport_pdf:
+   french: false
+type:
+  techreport
+# ------------
+# End of options to set
+knit: bookdown::render_book
+site: bookdown::bookdown_site
+link-citations: true
+bibliography: bib/refs.bib
+csl: csl/csas.csl
+lot: true
+lof: true
+# Any extra LaTeX code for the header:
+# header-includes:
+# - \usepackage{tikz}
+header-includes: \usepackage{pdflscape}
+                 
+---
+
+```{r setup, echo=FALSE, cache=FALSE, message=FALSE, results='hide', warning=FALSE}
+library(knitr)
+if (is_latex_output()) {
+  knitr_figs_dir <- "knitr-figs-pdf/"
+  knitr_cache_dir <- "knitr-cache-pdf/"
+  fig_out_type <- "png"
+} else {
+  knitr_figs_dir <- "knitr-figs-docx/"
+  knitr_cache_dir <- "knitr-cache-docx/"
+  fig_out_type <- "png"
+}
+fig_asp <- 0.618
+fig_width <- 9
+fig_out_width <- "6in"
+fig_dpi <- 180
+fig_align <- "center"
+fig_pos <- "htb"
+opts_chunk$set(
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>",
+  fig.path = knitr_figs_dir,
+  cache.path = knitr_cache_dir,
+  fig.asp = fig_asp,
+  fig.width = fig_width,
+  out.width = fig_out_width,
+  echo = FALSE,
+  #  autodep = TRUE,
+  #  cache = TRUE,
+  cache.comments = FALSE,
+  dev = fig_out_type,
+  dpi = fig_dpi,
+  fig.align = fig_align,
+  fig.pos = fig_pos
+)
+options(xtable.comment = FALSE)
+options(kableExtra.latex.load_packages = FALSE)
+```
+
+```{r load-libraries, cache=FALSE}
+# add other packages here:
+library(csasdown)
+message("year = ", rmarkdown::metadata$year)
+#browser()
+
+yr       <-  2012
+basepath <- 'c:/github/surveyreport_2012/figures/'
+path     <- 'c:/github/surveyreport_2012/standaloneData/'
+
+library(RODBC)
+library(knitr)
+library(magick)
+library(excelR)
+library(gapminder)
+library(ggplot2)
+library(dplyr)        # transform and summarize tabular data
+library(xtable)       # produces tables
+library(kableExtra)   # produces html tables with scrollbars, etc
+library(pacman)       # produces numbered tables and figures in order to reference them
+ #  if (!require("pacman")) install.packages("pacman")
+ #  pacman::p_load(knitr, captioner, bundesligR, stringr)
+#library(bookdown)
+library(tableHTML)
+library(Rmisc)
+#library(cowplot)  # for multiple plots
+
+#  ----   G L O B A L --- F U N C T I O N S ---------------------------------
+
+  GetSQLData <- function(strSQL,strDbName) {    # connect to SQL Server
+         cnn <- odbcDriverConnect(paste("Driver={SQL Server};Server=DFBCV9TWVASP001;", 
+                                         "Database=",
+                                          strDbName,";
+                                          Trusted_Connection=Yes",
+                                          sep=""))
+            dat <- sqlQuery(cnn, strSQL)
+            odbcClose(cnn)
+            return(dat) 
+                                            }
+  
+  panLab <- function( x, y, txt, ... ) { # Allows text to be placed at 0<x<1, 0<y<1)
+            usr <- par( "usr" )
+            par( usr=c(0,1,0,1) )
+            text( x, y, txt, ... )
+            par( usr=usr )
+            #return( NULL )
+            }
+  
+  cleanf <- function(x){                            # function to remove duplicates
+            oldx <- c(FALSE, x[-1]==x[-length(x)])  # is the value equal to the previous
+            res <- x
+            res[oldx] <- NA
+            return(res)
+            } 
+  
+  simpleCap <- function(x) {  # add capital first letter to each word
+            s <- strsplit(x, " ")[[1]]
+            paste(toupper(substring(s, 1,1)), substring(s, 2),
+            sep="", 
+            collapse=" ")
+            }
+  
+  firstup <- function(x) {   # add capital first letter to first word
+            substr(x, 1, 1) <- toupper(substr(x, 1, 1))
+            x
+  }
+  
+  format_cells <- function(df, rows ,cols, value = c("italics", "bold", "strikethrough")){
+
+            # select the correct markup
+            map    <- setNames(c("*", "**", "~~"), c("italics", "bold", "strikethrough"))
+            markup <- map[value]  
+            
+            for (r in rows){
+                  for(c in cols){
+                      df[[c]] <- as.character( df[[c]])  # -- make sure values are not factors
+                      df[r, c] <- paste0(markup, df[r, c], markup)  # -- Update formatting
+                                }
+                           }
+                     return(df)
+            }
+            
+  fig_label <- function(text, region="figure", pos="topleft", cex=NULL, ...) {
+           
+            region <- match.arg(region, c("figure", "plot", "device"))
+            pos <- match.arg(pos, c("topleft", "top", "topright", 
+                                    "left", "center", "right", 
+                                    "bottomleft", "bottom", "bottomright"))
+           
+            if(region %in% c("figure", "device")) {
+              ds <- dev.size("in")
+              # xy coordinates of device corners in user coordinates
+              x <- grconvertX(c(0, ds[1]), from="in", to="user")
+              y <- grconvertY(c(0, ds[2]), from="in", to="user")
+           
+              # fragment of the device we use to plot
+              if(region == "figure") {
+                # account for the fragment of the device that 
+                # the figure is using
+                fig <- par("fig")
+                dx <- (x[2] - x[1])
+                dy <- (y[2] - y[1])
+                x <- x[1] + dx * fig[1:2]
+                y <- y[1] + dy * fig[3:4]
+              } 
+            }
+           
+            # much simpler if in plotting region
+            if(region == "plot") {
+              u <- par("usr")
+              x <- u[1:2]
+              y <- u[3:4]
+            }
+           
+            sw <- strwidth(text, cex=cex) * 60/100
+            sh <- strheight(text, cex=cex) * 60/100
+           
+            x1 <- switch(pos,
+              topleft     =x[1] + sw, 
+              left        =x[1] + sw,
+              bottomleft  =x[1] + sw,
+              top         =(x[1] + x[2])/2,
+              center      =(x[1] + x[2])/2,
+              bottom      =(x[1] + x[2])/2,
+              topright    =x[2] - sw,
+              right       =x[2] - sw,
+              bottomright =x[2] - sw)
+           
+            y1 <- switch(pos,
+              topleft     =y[2] - sh,
+              top         =y[2] - sh,
+              topright    =y[2] - sh,
+              left        =(y[1] + y[2])/2,
+              center      =(y[1] + y[2])/2,
+              right       =(y[1] + y[2])/2,
+              bottomleft  =y[1] + sh,
+              bottom      =y[1] + sh,
+              bottomright =y[1] + sh)
+           
+            old.par <- par(xpd=NA)
+            on.exit(par(old.par))
+           
+            text(x1, y1, text, cex=cex, ...)
+            return(invisible(c(x,y)))
+            }
+  
+    inline_hook <- function(x) {  # -- for inline text where numbers are larger 
+      if (is.numeric(x)) {
+            format(x, digits = 2)
+                         } else x
+      }
+    knitr::knit_hooks$set(inline = inline_hook)
+  
+  
+
+```
+
+
+```{r SurveyDetails, echo=FALSE}  
+   # -- INTRODUCTION DETAILS --
+
+   report      <-  'exec Report_CreateTables'
+   #rep.data    <-  GetSQLData(report,"Sablefish")
+   details     <- paste("select VESSEL_NAME as Vessel, CAPTAIN, ",
+                        "LEFT(CONVERT(varchar, START_DATE, 100), 7) + ' - ' ",
+                        "+ LEFT(CONVERT(varchar, END_DATE, 100), 7) AS [Trip Dates], ",
+                        "COUNT([SET]) AS [Count of Sets] ",
+                        "from  dbo.GFBIO_RESEARCH_TRIPS ",
+                        "where year IN( ", yr ,") ", 
+                        "group by ",
+                        "VESSEL_NAME, CAPTAIN,  ",
+                        "LEFT(CONVERT(varchar, START_DATE, 100),7) + ' - ' + ",
+                        "LEFT(CONVERT(varchar, END_DATE, 100),7)", 
+                         sep="")
+   #sd     <- GetSQLData(details,"Sablefish")  # -- survey details
+   #write.table( sd, file = paste(path,"index01.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")
+   sd     <- read.csv(paste(path,'index01.csv',sep=''), header=T)
+   
+   boat        <- simpleCap(tolower(sd[1,1]))      # -- vessel name 
+   captain     <- simpleCap(tolower(sd[1,2]))      # -- captain name -- override for 2012
+   dates       <- sd[1,3]                          # -- survey start and end dates 
+   setcnt      <- sd[1,4]                          # -- survey set count 
+
+   avgC        <- paste("select round(AVG(TOTAL), 0) AS YrAvg ",
+                        "from   dbo.TableA2_Annual_sablefish_Landing_in_Can_waters_2 ",
+
+                        "where  (year <= ", yr, ") and (year >= ",yr - 9,")", sep="")
+   #avgTen      <- GetSQLData(avgC,"Sablefish")    # -- average catch last 10 years 
+   #write.table(avgTen, file = paste(path,"index02.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")
+   avgTen      <- read.csv(paste(path,'index02.csv', sep=''),header=T)
+   
+   tp          <- paste("select round(TRAP / TOTAL * 100, 0) AS TrapPer ",
+                        "from dbo.TableA2_Annual_sablefish_Landing_in_Can_waters_2 ",  
+                        "where  (year = ", yr, ")  group by round(TRAP / TOTAL * 100, 0), TOTAL", sep="")
+   #trapP       <- GetSQLData(tp,"Sablefish")        # -- trap gear catch ratio
+   #write.table(trapP, file = paste(path,"index03.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")   
+   trapP      <- read.csv(paste(path,'index03.csv', sep=''),header=T)
+   
+   lp          <- paste( "select  round(LONGLINE / TOTAL * 100, 0) AS LonglinePer from ",  
+                         "dbo.TableA2_Annual_sablefish_Landing_in_Can_waters_2  ",
+                         "where  (year = ", yr, ") group by round(LONGLINE / TOTAL * 100, 0), TOTAL", sep="")
+   #LonglineP   <- GetSQLData(lp,"Sablefish")        # -- longline gear catch ratio
+   #write.table(LonglineP, file = paste(path,"index04.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")    
+   LonglineP   <- read.csv(paste(path,'index04.csv', sep=''), header=T)
+
+   # -- F I G U R E   C A P T I O N S  function ------------------------------------------------
+   figure_nums <-  captioner::captioner(prefix = "Figure")
+   fg.ref      <-  function(x) {    # another method on how to number figures
+                                     stringr::str_extract(figure_nums(x), "[^.]*")}
+
+```
+
