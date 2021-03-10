@@ -1,6 +1,6 @@
 ---
 title: "Summary of the annual 2012 sablefish (*Anoplopoma fimbria*) trap survey, October 9 - November 17, 2012 " 
-year: 2012
+year: 2021
 report_number: nnn
 author: |
   Lisa C. Lacko, 

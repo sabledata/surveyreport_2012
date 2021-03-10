@@ -746,6 +746,14 @@
 \clearpage
 
 
+\clearpage
 
+(ref:figure15) Location of the epicentre of a 7.7 magnitude earthquake on Saturday October 27, 2012 at 8:04 p.m.  The inset shows the accelerometer reading that captured the earthquake event..
+
+```{r figure15, fig.cap='(ref:figure15)', out.width = "470px", out.height = "363px",echo=FALSE, fig.align="center", warning=FALSE}
+      img  <- paste(basepath,'figure15.png',sep="") 
+      knitr::include_graphics(img)
+```
+\clearpage
 
 
