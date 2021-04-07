@@ -2,7 +2,9 @@
 
 ## SURVEY DESIGN
 
-Methodology for the `r yr` sablefish  research and  assessment surveys employed a stratified random sampling (StRS) design.  The survey protocol required the StRS component to be completed from the southern end of Vancouver Island to the north coast of Haida Gwaii. If weather impacts the survey plan, the inlet sites are fished before completing the northern StRS sites in order to reduce the total number of fishing days.
+Methodology for the `r yr` sablefish research and assessment survey employed a stratified random sampling component, a traditional component, an exploratory study and a benthic impacts study.  
+
+  
 
 ### STRATIFIED RANDOM SAMPLING SURVEY DESIGN COMPONENT
 
@@ -16,9 +18,19 @@ From 2003 through 2005, five grid cells were randomly selected in each spatial-d
 
 Standardized fishing sets under the traditional component of the survey have specific gear, bait, and sampling protocols. The original intent of the standardized sets was to collect catch rate data in order to index trends in abundance, tag fish and obtain biological samples. In 2010 the offshore portion of the traditional standardized survey was terminated as it was shown that the continued use of the standardized survey, in combination with the StRS, resulted in greater frequencey for stock assessment errors [@Cox2011]. Since then only standardized fishing sets within four mainland inlet localities have continued (Appendix \@ref(app:first-appendix)). A string of twenty-five (25) traps were set at five specific localities in each of the following four (4) areas: Portland Inlet, Gil Island, Finlayson Channel, and Dean/Burke Channel. Trap gear was deployed near the center of each of the five locality boundaries in order to avoid the steep slopes characteristic of these channels/fjords (Figure \@ref(fig:figure3)).
 
+### EXPLORATORY COMPONENT
+
+Fishing sets for the exploratory component of the survey were used to evaluate Vancouver Island inlets that have not been surveyed for Sablefish density and/or size composition.
+
+### BENTHIC IMPACTS STUDY
+
+In order to evaluate the impact of fishing gear on the benthic habitat, camera sets were initiated during the 2012 Sablefish research and assessment survey.  Nuytco autonomous camera systems were attached to traps to capture video and still images. In addition, accelerometers were deployed on many sets to gather trap orientation and movement data.  
+
 ## VESSELS
 
 The `r yr` survey of `r setcnt` sets was chartered aboard the 25.34 meter F/V `r boat` (Figure \@ref(fig:figure3)), skippered by `r captain`  between `r dates`, `r yr` . Information about the vessel can be found at [\underline{http://marinetraffic.com}](http://marinetraffic.com). 
+
+
 
 ## FISHING GEAR
 
@@ -34,9 +46,17 @@ Two science staff recorded information associated with the deployment of the gea
 
 A set log was filled out on the deck by the science recorder who had maximum visibility of the crew setting the traps over the stern rail. The set log included the time and identity of the first and last buoys, anchor time, a tally of beckets and traps, as well as the unique identifying numbers of sensors deployed (Appendix \@ref(app:second-appendix), Figure B. 2)
 
-### Stratified Random Component (StRS)
+### STRATIFIED RANDOM SAMPLING SURVEY DESIGN COMPONENT
 
 Sets in StRS blocks had a targeted soak time of 24 hours.  Fishing sets were designated useable if hauled between 22 and 26 hours. Traps were baited with 10 pounds of loose offshore Pacific Hake (*Merluccius productus*) and 2 pounds of bagged squid.
+
+### TRADITIONAL STANDARD SURVEY COMPONENTS
+
+Standardized fishing sets under the traditional component of the survey have specific gear, bait, and sampling protocols. The original intent of the standardized sets was to collect catch rate data in order to index trends in abundance, tag fish and obtain biological samples. In 2010 the offshore portion of the traditional standardized survey was terminated as it was shown that the continued use of the standardized survey, in combination with the StRS, resulted in greater frequencey for stock assessment errors [@Cox2011]. Since then only standardized fishing sets within four mainland inlet localities have continued (Appendix \@ref(app:first-appendix)). A string of twenty-five (25) traps were set at five specific localities in each of the following four (4) areas: Portland Inlet, Gil Island, Finlayson Channel, and Dean/Burke Channel. Trap gear was deployed near the center of each of the five locality boundaries in order to avoid the steep slopes characteristic of these channels/fjords (Figure \@ref(fig:figure3)).
+
+### VANCOUVER ISLAND INLETS EXPLORATORY COMPONENT
+
+To assess those areas that have not been surveyed for Sablefish density and/or size composition, two exploratory sets were conducted in a Vancouver Island inlet near Quatsino Sound. These two sets were conducted in the immediate vicinity of the two exploratory sets that were done in the 2011 survey.
 
 ## CATCH PROCESSING
 
@@ -58,7 +78,7 @@ Length (L) and weight (W) measurements were collected from all Pacific halibut (
 
 ## SABLEFISH TAGGING
 
-Fish destined to be tagged were transferred from the sorting area to a tagging tank.  A vessel crew member was positioned to retrieve sablefish from the tank and provide assistance with fish handling.  A scientist stood at the sample station and tagged fish with a Mark II Long Tagging gun loaded with Floy FD-94 T-bar anchor tags.  The tag was inserted on the left side of the fish, 1 cm below and 2-3 cm behind the anterior insertion of the first dorsal fin.  Fork length (mm to the nearest ½ cm) measurements were taken. Before release, any sampling errors, injuries or damage to the fish were recorded on the tagging form by a second scientist. Tag checks were performed systematically to ensure tag numbers on the data form matched those on the fish specimen (Appendix \@ref(app:third-appendix), Figure B.6).
+Tagging became part of the annual sablefish research and assessment survey in 1991 (@Wyeth2003).  Fish destined to be tagged were transferred from the sorting area to a tagging tank.  A vessel crew member was positioned to retrieve sablefish from the tank and provide assistance with fish handling.  A scientist stood at the sample station and tagged fish with a Mark II Long Tagging gun loaded with Floy FD-94 T-bar anchor tags.  The tag was inserted on the left side of the fish, 1 cm below and 2-3 cm behind the anterior insertion of the first dorsal fin.  Fork length (mm to the nearest ½ cm) measurements were taken. Before release, any sampling errors, injuries or damage to the fish were recorded on the tagging form by a second scientist. Tag checks were performed systematically to ensure tag numbers on the data form matched those on the fish specimen (Appendix \@ref(app:third-appendix), Figure B.6).
 
 ## SABLEFISH TAG RECOVERY
 
@@ -82,10 +102,11 @@ During survey years 1992 through 1997 and 2004, previously tagged sablefish were
 
 ## OCEANOGRAPHIC SENSOR DATA COLLECTION
 
-A Sea-bird Bird SBE 39 temperature and pressure logger was placed in a protective plastic pipe and attached to the inside of the middle or end traps. Data was successfully collected from `r sensor[1,2]` sets in `r yr` (Appendix \@ref(app:third-appendix)).  A SBE 39 was also placed in the tagging tank on hauling days to record water temperature.   Data from the SBE temperature and pressure loggers were processed at sea after the set was complete. 
+A Sea-bird Bird SBE 39 temperature and pressure logger was placed in a protective plastic pipe and attached to the inside of the third trap during gear deployment. Data was successfully collected from `r sensor[1,2]` sets in `r yr` (Appendix \@ref(app:third-appendix)).  Typically, data from the sensor was immediately downloaded after hauling using the Sea-Bird Electronics SeaTerm © software.  Standard file format included temperature, pressure, date and time.  
+
 
 ## ELECTRONIC MONITORING VIDEO DATA COLLECTION  
 
-During haulback, the electronic monitoring (EM) system cameras were activated by the hydraulic sensor.  Three standard analog cameras were positioned at optimal viewing angles to record survey activities.  Two cameras were stationed along the mast to record the catch as it was processed at the hopper. A third camera was stationed on the side of the wheelhouse to record the traps as they were brought over the rail. The video data from each set was reviewed by science staff the following day to provide quality control on catch data.
+During haulback, the vessel’s electronic monitoring (EM) cameras were activated by the skipper.  Three internet protocol (IP) cameras and three standard analog cameras were positioned at optimal viewing angles to record the survey activities.  IP camera 6 and analog cameras 1 and 3 were positioned along the mast to record the catch as it was processed at the hopper.   IP camera 5 and analog camera 2 were positioned on the starboard to record the traps as they were brought over the rail.  Last, IP camera 4 was positioned over the tagging tank.   The video data from each set was reviewed by the catch recorder and an assistant shortly after the set to allow for quality control prior to the electronic catch data entry process.   
 
 \clearpage

@@ -1,4 +1,4 @@
-"SET","Total Weight(kg)","Total Count","Recovered Number","Recovered Dead Number","Released","Fork Len Tag Sample Count","Tagged Mean Fork Len(mm)","Fork Len Sample Count","Sex Sample Count","Maturity Sample Count","Otolith Sample Count","Weight Sample Count","Sample_count","Proportion Males","Male Mean Fork Len(mm)","Female Mean Fork Len(mm)"
+SET,Total Weight(kg),Total Count,Recovered Number,Recovered Dead Number,Released,Fork Len Tag Sample Count,Tagged Mean Fork Len(mm),Fork Len Sample Count,Sex Sample Count,Maturity Sample Count,Otolith Sample Count,Weight Sample Count,Sample_count,Proportion Males,Male Mean Fork Len(mm),Female Mean Fork Len(mm)
 1,514,213,1,0,60,61,603,62,62,62,62,62,62,0.42,566,639
 2,389,195,1,0,48,49,569,68,68,68,68,68,68,0.66,559,603
 3,320,167,0,0,49,49,576,57,57,57,57,57,57,0.74,552,615
@@ -38,7 +38,7 @@
 39,69,18,0,0,7,7,683,11,11,11,11,11,11,0.09,697,710
 40,387,149,0,0,75,75,601,51,51,51,51,51,51,0.55,592,676
 41,774,300,0,0,124,123,617,54,54,54,54,54,54,0.91,623,705
-43,1,1,0,0,0,0,,1,1,1,1,0,0,1,453,0
+43,1,1,0,0,0,0,,1,1,1,1,0,1,1,453,0
 44,351,92,0,0,26,26,695,57,57,57,57,0,57,0.28,646,697
 45,657,251,1,0,97,97,599,49,49,49,49,49,49,0.71,588,602
 46,325,107,0,0,34,34,642,51,51,50,51,51,51,0.22,642,663
@@ -131,4 +131,4 @@
 133,417,165,4,0,103,107,607,45,45,45,45,45,45,0.27,558,623
 134,446,159,0,0,80,80,621,42,42,42,42,42,42,0.33,582,637
 135,126,53,1,0,30,31,593,21,21,21,21,21,21,0.19,546,622
-135,57178,23060,151,1,8574,8708,,5677,5682,5674,5683,5535,5682,,,
+135,57178,23060,151,1,8574,8708,,5677,5682,5674,5683,5535,5683,,,

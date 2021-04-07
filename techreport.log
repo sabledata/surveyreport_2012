@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.3.8)  10 MAR 2021 09:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.4.6)  7 APR 2021 14:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -214,17 +214,17 @@ LaTeX Info: Redefining \] on input line 2924.
 )
 (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/microty
 pe.sty
-Package: microtype 2021/02/25 v2.8b Micro-typographical refinements (RS)
+Package: microtype 2021/03/14 v2.8c Micro-typographical refinements (RS)
 \MT@toks=\toks23
 \MT@count=\count281
-LaTeX Info: Redefining \textls on input line 788.
+LaTeX Info: Redefining \textls on input line 790.
 \MT@outer@kern=\dimen173
-LaTeX Info: Redefining \textmicrotypecontext on input line 1358.
+LaTeX Info: Redefining \textmicrotypecontext on input line 1374.
 \MT@listname@count=\count282
 
 (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/microty
 pe-pdftex.def
-File: microtype-pdftex.def 2021/02/25 v2.8b Definitions specific to pdftex (RS)
+File: microtype-pdftex.def 2021/03/14 v2.8c Definitions specific to pdftex (RS)
 
 LaTeX Info: Redefining \lsstyle on input line 915.
 LaTeX Info: Redefining \lslig on input line 915.
@@ -234,7 +234,7 @@ Package microtype Info: Loading configuration file microtype.cfg.
 
 (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/microty
 pe.cfg
-File: microtype.cfg 2021/02/25 v2.8b microtype main configuration file (RS)
+File: microtype.cfg 2021/03/14 v2.8c microtype main configuration file (RS)
 )) (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
@@ -290,10 +290,10 @@ LaTeX Warning: Command \underline  has changed.
 
 )
 (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2021/03/03 3.55 The Babel package
+Package: babel 2021/03/24 3.56 The Babel package
 
 (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2021/03/03 3.55 Babel common definitions
+File: babel.def 2021/03/24 3.56 Babel common definitions
 \babel@savecnt=\count283
 \U@D=\dimen174
 \l@babelnohyphens=\language4
@@ -363,7 +363,7 @@ Package caption Info: longtable package is loaded.
 .sty
 Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
 )) (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
-Package: lmodern 2009/10/30 v1.6 Latin Modern Fonts
+Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
 LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
@@ -601,7 +601,7 @@ Package: fontenc 2020/08/10 v2.0s Standard LaTeX package
 LaTeX Font Info:    Trying to load font information for T1+lmr on input line 11
 2.
 (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmr.fd
-File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )) (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/doi/doi.sty
 Package: doi 2018/09/09 handle doi numbers
 )
@@ -661,7 +661,7 @@ Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 )
 (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/datetime2/datetim
 e2.sty
-Package: datetime2 2020/03/02 v1.5.6 (NLCT) date and time formats
+Package: datetime2 2021/03/21 v1.5.7 (NLCT) date and time formats
 
 (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tracklang/trackla
 ng.sty
@@ -843,37 +843,38 @@ ty
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
 tim
 )
-LaTeX Font Info:    Trying to load font information for T1+phv on input line 10
-2.
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 98
+.
 (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 )
 (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backe
 nd-pdftex.def
-File: l3backend-pdftex.def 2021-03-02 L3 backend support: PDF output (pdfTeX)
+File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count331
 \l__pdf_internal_box=\box62
-) (./techreport.aux)
+)
+No file techreport.aux.
 \openout1 = `techreport.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 102.
-LaTeX Font Info:    ... okay on input line 102.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 102.
-LaTeX Font Info:    ... okay on input line 102.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 102.
-LaTeX Font Info:    ... okay on input line 102.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 102.
-LaTeX Font Info:    ... okay on input line 102.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 102.
-LaTeX Font Info:    ... okay on input line 102.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 102.
-LaTeX Font Info:    ... okay on input line 102.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 102.
-LaTeX Font Info:    ... okay on input line 102.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 102.
-LaTeX Font Info:    ... okay on input line 102.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 102.
-LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
 
 (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epst
 opdf-base.sty
@@ -888,23 +889,23 @@ e
 ))
 \symgns@font=\mathgroup4
 LaTeX Font Info:    Overwriting symbol font `gns@font' in version `bold'
-(Font)                  TS1/phv/m/n --> TS1/phv/b/n on input line 102.
-Package gensymb Info: Math companion symbols declared on input line 102.
-LaTeX Info: Redefining \degree on input line 102.
-LaTeX Info: Redefining \celsius on input line 102.
+(Font)                  TS1/phv/m/n --> TS1/phv/b/n on input line 98.
+Package gensymb Info: Math companion symbols declared on input line 98.
+LaTeX Info: Redefining \degree on input line 98.
+LaTeX Info: Redefining \celsius on input line 98.
 Package gensymb Info: Using text companion symbols for \degree, \celsius and \p
-erthousand on input line 102.
-LaTeX Info: Redefining \ohm on input line 102.
-Package gensymb Info: Using \textohm for \ohm on input line 102.
-Package gensymb Info: Using \textmu for \micro on input line 102.
-LaTeX Info: Redefining \microtypecontext on input line 102.
+erthousand on input line 98.
+LaTeX Info: Redefining \ohm on input line 98.
+Package gensymb Info: Using \textohm for \ohm on input line 98.
+Package gensymb Info: Using \textmu for \micro on input line 98.
+LaTeX Info: Redefining \microtypecontext on input line 98.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 102.
+LaTeX Info: Redefining \showhyphens on input line 98.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -914,11 +915,11 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
-(lastpage)             ! on input line 102.
+(lastpage)             ! on input line 98.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring ON on input line 102.
+Package hyperref Info: Link coloring ON on input line 98.
 
 (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.
 sty
@@ -930,14 +931,13 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count332
 )
-LaTeX Info: Redefining \ref on input line 102.
-LaTeX Info: Redefining \pageref on input line 102.
-LaTeX Info: Redefining \nameref on input line 102.
-(./techreport.out) (./techreport.out)
+LaTeX Info: Redefining \ref on input line 98.
+LaTeX Info: Redefining \pageref on input line 98.
+LaTeX Info: Redefining \nameref on input line 98.
 \@outlinefile=\write4
 \openout4 = `techreport.out'.
 
-Package soulpos Info: Loading soulutf8 on input line 102.
+Package soulpos Info: Loading soulutf8 on input line 98.
 
 (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/soulutf8/soulut
 f8.sty
@@ -954,7 +954,7 @@ Package: soul 2003/11/17 v2.4 letterspacing/underlining (mf)
 \SOUL@uldp=\dimen274
 \SOUL@ulht=\dimen275
 )) ABD: EverySelectfont initializing macros
-LaTeX Info: Redefining \selectfont on input line 102.
+LaTeX Info: Redefining \selectfont on input line 98.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -989,9 +989,9 @@ LaTeX Info: Redefining \selectfont on input line 102.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Option `pageanchor' set `false' on input line 107.
+Package hyperref Info: Option `pageanchor' set `false' on input line 103.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <17.28> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 107.
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 103.
 
 (c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-cmr.
 cfg
@@ -1004,4 +1004,539 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 {c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdft
 ex.map}]
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
-(Font)              Font shape `T1/phv/m/sl'
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 103.
+[2
+
+]
+Package hyperref Info: Option `pageanchor' set `true' on input line 103.
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10.95> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 103.
+[1
+
+]
+LaTeX Font Info:    Trying to load font information for TS1+phv on input line 1
+03.
+(c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ts1phv.fd
+File: ts1phv.fd 2020/03/25 scalable font definitions for TS1/phv.
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `phv' (encoding: TS1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+
+LaTeX Warning: Reference `TRlastRoman' on page ii undefined on input line 103.
+
+
+LaTeX Warning: Reference `LastPage' on page ii undefined on input line 103.
+
+[2
+
+]
+\tf@toc=\write5
+\openout5 = `techreport.toc'.
+
+[3
+
+]
+
+LaTeX Warning: Reference `TRlastRoman' on page iv undefined on input line 103.
+
+
+LaTeX Warning: Reference `LastPage' on page iv undefined on input line 103.
+
+[4
+
+]
+
+LaTeX Warning: Reference `TRlastRoman' on page v undefined on input line 103.
+
+
+LaTeX Warning: Reference `LastPage' on page v undefined on input line 103.
+
+[5
+
+]pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.137 
+       [1
+
+]
+Package marginnote Info: Using workaround for absolute page number on input lin
+e 137.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
+38.
+(c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
+File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
+38.
+(c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
+File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
+138.
+(c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
+File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
+138.
+(c:/Users/lackol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
+File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10.95> on input line 138.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 138.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 138.
+
+LaTeX Warning: Reference `fig:figure1' on page 2 undefined on input line 138.
+
+
+LaTeX Warning: Reference `tab:table1' on page 2 undefined on input line 140.
+
+
+LaTeX Warning: Reference `fig:figure2' on page 2 undefined on input line 140.
+
+
+LaTeX Warning: Reference `app:first-appendix' on page 2 undefined on input line
+ 145.
+
+
+LaTeX Warning: Reference `fig:figure3' on page 2 undefined on input line 145.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.156 
+       [2]
+
+LaTeX Warning: Reference `fig:figure3' on page 3 undefined on input line 160.
+
+
+LaTeX Warning: Reference `fig:figure4' on page 3 undefined on input line 165.
+
+
+LaTeX Warning: Reference `fig:figure4' on page 3 undefined on input line 165.
+
+
+LaTeX Warning: Reference `app:second-appendix' on page 3 undefined on input lin
+e 174.
+
+
+LaTeX Warning: Reference `app:second-appendix' on page 3 undefined on input lin
+e 176.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.177 
+       [3]
+
+LaTeX Warning: Reference `app:first-appendix' on page 4 undefined on input line
+ 186.
+
+
+LaTeX Warning: Reference `fig:figure3' on page 4 undefined on input line 186.
+
+
+LaTeX Warning: Reference `app:second-appendix' on page 4 undefined on input lin
+e 196.
+
+
+LaTeX Warning: Reference `app:second-appendix' on page 4 undefined on input lin
+e 198.
+
+
+LaTeX Warning: Reference `app:second-appendix' on page 4 undefined on input lin
+e 198.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.199 
+       [4]
+
+LaTeX Warning: Reference `app:second-appendix' on page 5 undefined on input lin
+e 210.
+
+
+LaTeX Warning: Reference `app:third-appendix' on page 5 undefined on input line
+ 217.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.5}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.218 
+       [5]
+
+LaTeX Warning: Reference `app:third-appendix' on page 6 undefined on input line
+ 229.
+
+[6] [7]
+
+LaTeX Warning: Reference `fig:figure5' on page 8 undefined on input line 249.
+
+
+LaTeX Warning: Reference `fig:figure6' on page 8 undefined on input line 249.
+
+
+LaTeX Warning: Reference `fig:figure7' on page 8 undefined on input line 249.
+
+
+LaTeX Warning: Reference `fig:figure8' on page 8 undefined on input line 249.
+
+
+LaTeX Warning: Reference `fig:figure9' on page 8 undefined on input line 249.
+
+
+LaTeX Warning: Reference `tab:table2' on page 8 undefined on input line 254.
+
+
+LaTeX Warning: Reference `tab:table3' on page 8 undefined on input line 256.
+
+
+LaTeX Warning: Reference `tab:table4' on page 8 undefined on input line 258.
+
+
+LaTeX Warning: Reference `app:fourth-appendix' on page 8 undefined on input lin
+e 263.
+
+
+LaTeX Warning: Reference `app:fifth-appendix' on page 8 undefined on input line
+ 265.
+
+[8
+
+]
+
+LaTeX Warning: Reference `tab:table6' on page 9 undefined on input line 267.
+
+
+LaTeX Warning: Reference `fig:figure14' on page 9 undefined on input line 269.
+
+
+LaTeX Warning: Reference `fig:figure11' on page 9 undefined on input line 271.
+
+
+LaTeX Warning: Reference `fig:figure11' on page 9 undefined on input line 271.
+
+
+LaTeX Warning: Reference `app:sixth-appendix' on page 9 undefined on input line
+ 281.
+
+
+LaTeX Warning: Reference `app:seventh-appendix' on page 9 undefined on input li
+ne 281.
+
+
+LaTeX Warning: Reference `app:eighth-appendix' on page 9 undefined on input lin
+e 281.
+
+
+LaTeX Warning: Reference `tab:table8' on page 9 undefined on input line 283.
+
+
+LaTeX Warning: Reference `fig:figure12' on page 9 undefined on input line 288.
+
+
+LaTeX Warning: Reference `fig:figure12' on page 9 undefined on input line 290.
+
+[9]
+
+LaTeX Warning: Reference `fig:figure13' on page 10 undefined on input line 300.
+
+
+
+LaTeX Warning: Reference `fig:figure14' on page 10 undefined on input line 302.
+
+
+
+LaTeX Warning: Reference `fig:figure15' on page 10 undefined on input line 307.
+
+
+[10]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 330.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 330.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 330.
+
+Underfull \hbox (badness 10000) in paragraph at lines 366--366
+[]\T1/phv/m/n/12 (+20) Table 2. |[]Spa-tial strata al-lo-ca-tion for the strat-
+i-fied ran-dom sur-vey de-sign and com-pleted
+ []
+
+
+Overfull \hbox (5.37352pt too wide) in paragraph at lines 372--372
+ []|[]\T1/phv/b/n/10 (-20) RD1[]|
+ []
+
+
+Overfull \hbox (5.09352pt too wide) in paragraph at lines 372--372
+ []|[]\T1/phv/b/n/10 (-20) RD1
+ []
+
+
+Overfull \hbox (7.56856pt too wide) in paragraph at lines 372--372
+ \T1/phv/b/n/10 (-20) 2012[]|
+ []
+
+
+Overfull \hbox (5.37352pt too wide) in paragraph at lines 372--372
+ []|[]\T1/phv/b/n/10 (-20) RD2[]|
+ []
+
+
+Overfull \hbox (5.37352pt too wide) in paragraph at lines 372--372
+ []|[]\T1/phv/b/n/10 (-20) RD2
+ []
+
+
+Overfull \hbox (7.56856pt too wide) in paragraph at lines 372--372
+ \T1/phv/b/n/10 (-20) 2012[]|
+ []
+
+
+Overfull \hbox (5.37352pt too wide) in paragraph at lines 372--372
+ []|[]\T1/phv/b/n/10 (-20) RD3[]|
+ []
+
+
+Overfull \hbox (5.37352pt too wide) in paragraph at lines 372--372
+ []|[]\T1/phv/b/n/10 (-20) RD3
+ []
+
+
+Overfull \hbox (7.56856pt too wide) in paragraph at lines 372--372
+ \T1/phv/b/n/10 (-20) 2012[]|
+ []
+
+
+Overfull \hbox (2.69518pt too wide) in paragraph at lines 372--372
+ []|[]\T1/phv/b/n/10 (-20) Total[]|
+ []
+
+
+Overfull \hbox (8.38565pt too wide) in paragraph at lines 372--373
+ []|[]\T1/phv/b/n/10 (-20) Total
+ []
+
+
+Overfull \hbox (7.56856pt too wide) in paragraph at lines 372--373
+ \T1/phv/b/n/10 (-20) 2012[]|
+ []
+
+
+Overfull \hbox (2.11983pt too wide) in paragraph at lines 380--381
+ []|[]\T1/phv/b/n/10 (-20) 110[]|
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 392--392
+[]\T1/phv/m/n/12 (+20) Table 3. |[]Sum-mary of species cap-tured dur-ing the 20
+12 sur-vey StRS sets con-ducted
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 392--392
+\T1/phv/m/n/12 (+20) by the Ocean Pearl. No value in the weight col-umn in-di-c
+ates that the catch was not
+ []
+
+[11
+
+] [12]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 3 on input line 482.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 490--490
+[]\T1/phv/m/n/12 (+20) Table 4. |[]Sum-mary of species cap-tured by the Ocean P
+earl dur-ing the 2012 sur-vey
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 490--490
+\T1/phv/m/n/12 (+20) stan-dard-ized sets con-ducted at main-land in-let lo-cal-
+i-ties. Null val-ues in-di-cate the catch
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 490--490
+\T1/phv/m/n/12 (+20) was not counted or weighed. No value in both weight and co
+unt in-di-cates trace weights
+ []
+
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <9> on input line 537.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 553--553
+[]\T1/phv/m/n/12 (+20) Table 6. |[]Sum-mary of sable-fish fork length mea-sure-
+ments col-lected dur-ing the 2012
+ []
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 600--600
+[]\T1/phv/m/n/12 (+16) Table 7. |[]Sable-fish tag re-cov-ery counts by dis-tanc
+e from re-lease site and years at lib-erty
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 624--624
+[]\T1/phv/m/n/12 (+20) Table 8. |[]List of the North Pa-cific spiny dog-fish ta
+gged with pop-off satel-lite tags. The
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 624--624
+\T1/phv/m/n/12 (+20) tube la-bel and tag num-ber iden-tify the dog-fish. The GF
+-BIO spec-i-men iden-ti-fier is
+ []
+
+
+Overfull \hbox (8.01581pt too wide) in paragraph at lines 628--628
+[]|\T1/phv/b/n/9 (-20) Precaudal 
+ []
+
+[15
+
+]
+<c:/github/surveyreport_2012/figures/figure1.png, id=206, 614.295pt x 794.97pt>
+
+File: c:/github/surveyreport_2012/figures/figure1.png Graphic file (type png)
+<use c:/github/surveyreport_2012/figures/figure1.png>
+Package pdftex.def Info: c:/github/surveyreport_2012/figures/figure1.png  used 
+on input line 659.
+(pdftex.def)             Requested size: 411.539pt x 532.57861pt.
+File: c:/github/surveyreport_2012/figures/figure1.png Graphic file (type png)
+<use c:/github/surveyreport_2012/figures/figure1.png>
+Package pdftex.def Info: c:/github/surveyreport_2012/figures/figure1.png  used 
+on input line 659.
+(pdftex.def)             Requested size: 411.539pt x 532.57861pt.
+File: c:/github/surveyreport_2012/figures/figure1.png Graphic file (type png)
+<use c:/github/surveyreport_2012/figures/figure1.png>
+Package pdftex.def Info: c:/github/surveyreport_2012/figures/figure1.png  used 
+on input line 659.
+(pdftex.def)             Requested size: 411.539pt x 532.57861pt.
+File: c:/github/surveyreport_2012/figures/figure1.png Graphic file (type png)
+<use c:/github/surveyreport_2012/figures/figure1.png>
+Package pdftex.def Info: c:/github/surveyreport_2012/figures/figure1.png  used 
+on input line 659.
+(pdftex.def)             Requested size: 411.539pt x 532.57861pt.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <12> on input line 663.
+
+Underfull \hbox (badness 10000) in paragraph at lines 663--663
+[]\T1/phv/m/n/12 (+20) Figure 1. |Lo-ca-tion of the bound-aries of the main-lan
+d in-let lo-cal-i-ties, one ex-ploratory
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 663--663
+\T1/phv/m/n/12 (+20) site and the five spa-tial ar-eas (S$[]$-S$[]$) of the str
+at-i-fied ran-dom sur-vey de-sign. The three
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 663--663
+\T1/phv/m/n/12 (+20) depths strata (RD$[]$-RD$[]$) are colour-coded and nested 
+within each of the five spa-tial
+ []
+
+[16
+
+] [17 <c:/github/surveyreport_2012/figures/figure1.png
+
+pdfTeX warning: pdflatex.exe (file c:/github/surveyreport_2012/figures/figure1.
+png): large interlaced PNG might cause out of memory (use non-interlaced PNG to
+ fix this)
+>]
+<c:/github/surveyreport_2012/figures/figure2.png, id=219, 794.97pt x 614.295pt>
+
+File: c:/github/surveyreport_2012/figures/figure2.png Graphic file (type png)
+<use c:/github/surveyreport_2012/figures/figure2.png>
+Package pdftex.def Info: c:/github/surveyreport_2012/figures/figure2.png  used 
+on input line 670.
+(pdftex.def)             Requested size: 481.81352pt x 382.43369pt.
+File: c:/github/surveyreport_2012/figures/figure2.png Graphic file (type png)
+<use c:/github/surveyreport_2012/figures/figure2.png>
+Package pdftex.def Info: c:/github/surveyreport_2012/figures/figure2.png  used 
+on input line 670.
+(pdftex.def)             Requested size: 481.81352pt x 382.43369pt.
+File: c:/github/surveyreport_2012/figures/figure2.png Graphic file (type png)
+<use c:/github/surveyreport_2012/figures/figure2.png>
+Package pdftex.def Info: c:/github/surveyreport_2012/figures/figure2.png  used 
+on input line 670.
+(pdftex.def)             Requested size: 481.81352pt x 382.43369pt.
+File: c:/github/surveyreport_2012/figures/figure2.png Graphic file (type png)
+<use c:/github/surveyreport_2012/figures/figure2.png>
+Package pdftex.def Info: c:/github/surveyreport_2012/figures/figure2.png  used 
+on input line 670.
+(pdftex.def)             Requested size: 481.81352pt x 382.43369pt.
+
+Overfull \hbox (12.0585pt too wide) in paragraph at lines 670--671
+ []|[][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 674--674
+[]\T1/phv/m/n/12 (+20) Figure 2. |Start lo-ca-tions of sur-vey sets in 2012 con
+-ducted in the strat-i-fied ran-dom
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 674--674
+\T1/phv/m/n/12 (+20) sur-vey ar-eas S$[]$ through S$[]$ (red mark-ers) and in t
+he ex-ploratory area (pur-ple mark-ers).
+ []
+
+[18
+
+ <c:/github/surveyreport_2012/figures/figure2.png (PNG copy)>]
+<c:/github/surveyreport_2012/figures/figure3.png, id=227, 722.7pt x 542.025pt>
+File: c:/github/surveyreport_2012/figures/figure3.png Graphic file (type png)
+<use c:/github/surveyreport_2012/figures/figure3.png>
+Package pdftex.def Info: c:/github/surveyreport_2012/figures/figure3.png  used 
+on input line 681.
+(pdftex.def)             Requested size: 481.80249pt x 361.36014pt.
+File: c:/github/surveyreport_2012/figures/figure3.png Graphic file (type png)
+<use c:/github/surveyreport_2012/figures/figure3.png>
+Package pdftex.def Info: c:/github/surveyreport_2012/figures/figure3.png  used 
+on input line 681.
+(pdftex.def)             Requested size: 481.80249pt x 361.36014pt.
+File: c:/github/surveyreport_2012/figures/figure3.png Graphic file (type png)
+<use c:/github/surveyreport_2012/figures/figure3.png>
+Package pdftex.def Info: c:/github/surveyreport_2012/figures/figure3.png  used 
+on input line 681.
+(pdftex.def)             Requested size: 481.80249pt x 361.36014pt.
+File: c:/github/surveyreport_2012/figures/figure3.png Graphic file (type png)
+<use c:/github/surveyreport_2012/figures/figure3.png>
+Package pdftex.def Info: c:/github/surveyreport_2012/figures/figure3.png  used 
+on input line 681.
+(pdftex.def)             Requested size: 481.80249pt x 361.36014pt.
+
+Overfull \hbox (12.04747pt too wide) in paragraph at lines 681--682
+ []|[][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 685--685
+[]\T1/phv/m/n/12 (+20) Figure 3. |Im-age of the F/V Ocean Pearl used for the 20
+12 sable-fish re-search and
+ []
+
+[19
+
+ <c:/github/surveyreport_2012/figures/figure3.png>]

@@ -1,13 +1,5 @@
 # Results and Discussion
 
-## FISHING
-
-```{r HistoricText, echo=FALSE}
-
-
-```
-Of the 91 original blocks for the StRS portion of the survey, ten were replaced at-sea and four blocks were rejected, for a total of 87 blocks successfully fished (Table \@ref(tab:table1)). Of the ten replacements, one was revoked after on-ground inspection, three were located within unfishable habitat, four had failed to meet depth strata requirements, one was located in a conservation area and one generated an error.
-
 ```{r CatchRateText, echo=FALSE}
   # -- generate the lowest uncertainity and corresponding year for catch rate paragraph
 
@@ -73,11 +65,11 @@ from the 2018-2019 average [@DFO2021] (Figure \@ref(fig:figure9)).
                          "group by SABLE_SET_TYPE, Year, SPECIES_CODE, ",
                          "SPECIES_COMMON_NAME, SPECIES_SCIENCE_NAME ",
                          "having (SABLE_SET_TYPE = N'StRS') and ",
-                         "(SPECIES_CODE <> N'455') and (Year = ",yr,") ",
+                         "(SPECIES_CODE <> N'455') and (Year = ", yr ,") ",
                          "order by catchkg DESC", sep="") 
    #topStRSsp    <- GetSQLData(topStRS,"Sablefish") 
    #write.table(topStRSsp, file = paste(path,"results02.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")   
-   topStRSsp  <-  read.csv(paste(path, 'results02.csv',sep=''), header=T) 
+   topStRSsp  <-  read.csv(paste(path, 'results02.csv', sep=''), header=T) 
    
    topStRSsp1   <- as.character(topStRSsp[1,1])                     # -- StRS top 5 species names
    topStRSsc1   <- firstup(tolower(as.character(topStRSsp[1,2])))   # -- StRS top 5 species science names
@@ -125,13 +117,67 @@ from the 2018-2019 average [@DFO2021] (Figure \@ref(fig:figure9)).
    birdS        <- strsSpCom[1,6]
    #totalS       <- firstup(as.character(strsSpCom[1,7])) # taxonomic unit count for StRS with capital
    totalS       <- as.character(strsSpCom[1,7]) # taxonomic unit count for StRS
+   
+   
+   
+  # -- taxonomic group count Inlets 
+   topInlet     <- paste("select top (2) SPECIES_COMMON_NAME, SPECIES_SCIENCE_NAME, sum(CATCH_WEIGHT) AS catchkg ",
+                           "from dbo.GFBIO_RESEARCH_CATCH  ",
+                           "group by SABLE_SET_TYPE, Year, SPECIES_CODE, SPECIES_COMMON_NAME, SPECIES_SCIENCE_NAME ",
+                           "having (SABLE_SET_TYPE = N'INLET STandARDIZED') ",
+                           "and (SPECIES_CODE <> N'455') and (Year = ",yr,") ",
+                           "order by catchkg DESC", sep="") 
+   #topInletsp   <- GetSQLData(topInlet,"Sablefish") 
+   #write.table(topInletsp, file = paste(path,"results03I.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")    
+   topInletsp   <-  read.csv(paste(path,'results03I.csv',sep=''),header=T)
+      
+   topInletsp1  <- as.character(topInletsp[1,1])                    # -- inlet top 2 species names
+   topInletsc1  <- firstup(tolower(as.character(topInletsp[1,2])))  # -- inlet top 2 species science names
+   
+   topInletsp2  <- tolower(as.character(as.character(topInletsp[2,1])))  # -- put to lowercase
+   topInletsc2  <- firstup(tolower(as.character(topInletsp[2,2])))  
+   
+   # -- species composition counts inlet sets
+   spcI          <- paste("select dbo.fnIntegerToWords(SUM(CAST(Roundfish AS int))) AS tRound, ",
+                                 "dbo.fnIntegerToWords(ISNULL(SUM(Rockfish),0))     AS tRock,    ",
+                                 "dbo.fnIntegerToWords(ISNULL(SUM(Flatfish),0))     AS tFlat,    ",
+                                 "dbo.fnIntegerToWords(ISNULL(SUM(Invertebrate),0)) AS tInvert,  ",
+                                 "dbo.fnIntegerToWords(ISNULL(SUM(Mammal),0))       AS tMammal,  ",
+                                 "dbo.fnIntegerToWords(ISNULL(SUM(Bird),0))         AS tBird,    ",
+                                 "dbo.fnIntegerToWords(SUM(counter))                AS total     ",    
+                                 "from   (select CASE WHEN Fish = Rockfish or Fish = Flatfish ",
+                                 "then 0 ELSE Fish END AS Roundfish,  ",
+                                 "Fish, Rockfish, Flatfish, Invertebrate, Mammal, Bird,       ",
+                                 "SABLE_SET_TYPE, TRIP_ID, 1 AS counter, Year, SPECIES_CODE   ",
+                                 "from dbo.GFBIO_RESEARCH_CATCH  ",
+                                 "group by Fish, Rockfish, Flatfish, Invertebrate, Mammal, ",
+                                 "Bird, SABLE_SET_TYPE, Year, TRIP_ID, ",
+                                 "CASE WHEN Fish = Rockfish or Fish = Flatfish THEN 0 ELSE Fish END, SPECIES_CODE ",
+                                 "having (SABLE_SET_TYPE = N'INLET STANDARDIZED')       ",
+                                 "and (Year = ",yr,")) AS RC", sep="")
+   #strsSpComI    <- GetSQLData(spcI,"Sablefish")
+   #write.table(strsSpComI, file = paste(path,"results04I.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")    
+   strsSpComI   <-  read.csv(paste(path,'results04I.csv',sep=''),header=T) 
+   
+   roundfishI   <- strsSpComI[1,1]
+   rockfishI    <- strsSpComI[1,2]
+   flatfishI    <- strsSpComI[1,3]
+   invertI      <- strsSpComI[1,4]
+   #mammalI      <- strsSpComI[1,5]
+   #birdI        <- strsSpComI[1,6]
+   totalI       <- firstup(as.character(strsSpComI[1,7]))   # taxonomic units count for inlets
+   totalI       <- as.character(strsSpComI[1,7])      # taxonomic units count for inlets
 
 
 ```
 
 ## CATCH COMPOSITION
 
-A total of `r totalS[1]` taxonomic groups were represented in the catches in StRS sets in `r yr` (Table \@ref(tab:table2)).  These included `r roundfishS[1]` roundfish species, `r rockfishS[1]` rockfish species, `r flatfishS[1]`  flatfish species and `r invertS[1]` invertebrate species. Other than sablefish, the most common species, by weight,  were  `r topStRSsp1[1]` (*`r topStRSsc1`*), `r topStRSsp2` (*`r topStRSsc2`*), `r topStRSsp3` (*`r topStRSsc3`*),   `r topStRSsp4` (*`r topStRSsc4`*) and  `r topStRSsp5` (*`r topStRSsc5`*).   
+A total of `r totalS[1]` taxonomic groups were represented in the catches in StRS sets in `r yr`.  These included `r roundfishS[1]` roundfish species, `r rockfishS[1]` rockfish species, `r flatfishS[1]`  flatfish species and `r invertS[1]` invertebrate species. Other than sablefish, the most common species, by weight,  were  `r topStRSsp1[1]` (*`r topStRSsc1`*), `r topStRSsp2` (*`r topStRSsc2`*), `r topStRSsp3` (*`r topStRSsc3`*),   `r topStRSsp4` (*`r topStRSsc4`*) and  `r topStRSsp5` (*`r topStRSsc5`*) (Table \@ref(tab:table2)).
+
+A total of `r totalI` taxonomic groups were represented in the catches from traditional standardized sets conducted in mainland inlet localities in `r yr`.  These included `r roundfishI` roundfish species, `r rockfishI`  rockfish species, `r flatfishI` flatfish species and `r invertI` invertebrate species.  The most common species, by weight, other than sablefish were `r topInletsp1` (*`r topInletsc1`*) and `r topInletsp2` (*`r topInletsc2`*) (Table \@ref(tab:table3)).
+
+Two taxonomic groups were represented in the catches at the exploratory sites in `r yr`.  Only one sablefish (*Anoplopoma fimbria*) and one Pacific ocean perch (*Sebastes alutus*) were captured (Table \@ref(tab:table4)).
 
 ```{r SamplingWords, echo=FALSE}
     # inline text query Sablefish.dbo.GFBIO_RESEARCH_SAMPLE_DETAILS for the counts of Sablefish from StRS sets
@@ -346,21 +392,31 @@ A detailed breakdown of the fate of the catch in each trap for the `r yr` survey
 
 During the `r yr` StRS, a total of `r format(countStRS[1,2], big.mark=",")` sablefish were caught.   Of that total, `r format(countStRS[1,5], big.mark=",")` were tagged and released and `r format(countStRS[1,7], big.mark=",")` were retained for biological sampling. Of the tagged fish, `r countStRS[1,3]` were previously tagged fish that were re-released with a new tag.  One previously tagged fish was retained for sampling (Appendix \@ref(app:fifth-appendix)).
 
-Overall, the StRS sets had a higher proportion of females than males over `r stratafemale` (Table \@ref(tab:table3)).  More females than males were seen in the shallow depth stratum within `r shallsfemale`.  In the mid depth stratum, there were more males than females in `r midsmale`.  The deepest depth stratum saw more females in spatial strata `r deepsfemale`.  
+Overall, the StRS sets had a higher proportion of females than males over `r stratafemale` (Table \@ref(tab:table6)).  More females than males were seen in the shallow depth stratum within `r shallsfemale`.  In the mid depth stratum, there were more males than females in `r midsmale`.  The deepest depth stratum saw more females in spatial strata `r deepsfemale`.  
 
 In `r yr`, the average mean fork length for the `r format(length(firstyrfem$sex), big.mark=",")` females was `r mean(females)` cm  and the average mean fork length for the `r format(length(firstyrmal$sex), big.mark=",")` males was `r round(mavgyr1$AvL,1) ` cm.  The mean length of both females and males reached their lowest mean size since 2003 (Figure \@ref(fig:figure14)). 
 
-On average, female sablefish grow faster and reach a far greater size (Figure \@ref(fig:figure15)a) compared to males (Figure \@ref(fig:figure15)b).
+On average, female sablefish grow faster and reach a far greater size (Figure \@ref(fig:figure11)a) compared to males (Figure \@ref(fig:figure11)b).
 
 
 
 ## RECOVERED TAGGED SABLEFISH
 
-Of the `r countStRS[1,3]` Canadian tagged fish that were recovered on the survey, the majority (79%) had travelled within 50 kilometers of the release site.  Most of these tagged fish (70%) were recaptured within 5 years at liberty (Table \@ref(tab:table4)).  Three fish were recovered a second time and released a third time (Table \@ref(tab:table5)).
 
-## OTHER FISH SAMPLING
 
-Length, sex, maturity, otoliths and DNA samples were collected for the rougheye/blackspotted rockfish complex.  (Appendix \@ref(app:sixth-appendix)).
+TBD
+Of the `r countStRS[1,3]` Canadian tagged fish that were recovered on the survey, the majority (79%) had travelled within 50 kilometers of the release site.  Most of these tagged fish (70%) were recaptured within 5 years at liberty .  
+
+
+## OTHER FISH SAMPLING AND TAGGING
+
+Length, sex, maturity, otoliths and DNA samples were collected for 395 rougheye/blackspotted rockfish.  (Appendix \@ref(app:sixth-appendix)).
+Fork length, sex, collected for arrowtooth flounder,  aurora rockfish, greenstriped rockfish, lingcod, Pacific cod, Pacific halibut, redbanded rockfish, rosethorn rockfish,
+shortraker rockfish, walleye pollock, yelloweye rockfish and yellowmouth rockfish (Appendix \@ref(app:seventh-appendix)).  Total length, sex, collected for dover sole, giant blobsculpin, longspine thornyhead, north Pacific spiny dogfish, Pacific flatnose, pink snailfish, and shortspine thornyhead (Appendix \@ref(app:eighth-appendix)).
+
+North Pacific spiny dogfish with a pre-caudal length greater than seventy centimetres were tagged with pop-off satellite tags.  Four tagged fish were released in each of area 3D and 5A, two in area 5B and eight in area 5E (Figure \@ref(tab:table8)).
+
+
 
 ```{r SablefishAgesText, echo=FALSE}
    # -- provides values for inline text, important to know the last year of ages completed
@@ -372,12 +428,12 @@ Length, sex, maturity, otoliths and DNA samples were collected for the rougheye/
    #write.table(agedat, file = paste(path,"results08.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")   
    agedat      <-    read.csv(paste(path,'results08.csv',sep=''),header=T)
    
-   oldageF     <-  "exec procRReport_Survey_oldAgeFish 2"  # -- oldest female text caption
+   oldageF     <-  paste('exec procRReport_Survey_oldAgeSable 2, ', yr, ' ', sep='')  # -- oldest female text caption
    #oldageFem   <-  GetSQLData(oldageF,"Sablefish")
    #write.table(oldageFem, file = paste(path,"results09.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")    
    oldageFem   <-    read.csv(paste(path,'results09.csv',sep=''),header=T)
    
-   oldageM     <-  "exec procRReport_Survey_oldAgeFish 1"  # -- oldest male text caption
+   oldageM     <-  paste('exec procRReport_Survey_oldAgeSable 1, ', yr, ' ', sep='')  # -- oldest male text caption
    #oldageMale  <-  GetSQLData(oldageM,"sablefish") 
    #write.table(oldageMale, file = paste(path,"results10.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")   
    oldageMale  <-    read.csv(paste(path,'results10.csv',sep=''),header=T) 
@@ -386,54 +442,65 @@ Length, sex, maturity, otoliths and DNA samples were collected for the rougheye/
    oldFemYr    <-  oldageFem[1,3]                # -- year captured
    oldMale     <-  oldageMale[1,2]               # -- oldest male age
    oldMaleYr   <-  oldageMale[1,3]               # -- year captured
+   
 ```
 
 ## SABLEFISH AGES
 
-At the time of this report, sablefish ages were available until 2018.  The highest proportion of male ages in StRS sets for 2003 through to 2011 were 3, 5, 5, 6, 8, 8, 8, 10 and 12 years of age, respectively.  Another cohort appeared in 2012 through to 2016 as 4, 5, 7, 7 and 8 year olds.  A cohort appeared to arrive in 2017 which was dominated by 3 year olds, in 2018 by 5 year olds (Figure \@ref(fig:figure17)a).  
+The highest proportion of female ages in the StRS sets for 2003 through to 2010 were 3, 4, 5, 6, 7, 8, 9, 10 years of age, respectively.  Then, another cohort appeared in 2011 and 2012, showing up as 3 and 4 year olds (Figure \@ref(fig:figure12)a).
 
-The highest proportion of female ages in the StRS sets for 2003 through to 2010 were 3, 4, 5, 6, 7, 8, 9 and 10 years of age, respectively. Then, another cohort appeared in 2011 through to 2015, showing up as 3, 4, 5, 6 and 7 year olds.  In 2016, 2017, and 2018 the highest proportion of female sablefish were ages 3, 4, and 5 (Figure \@ref(fig:figure17)b).
+The highest proportion of male ages in StRS sets for 2003 through to 2012 were 3, 5, 5, 6, 8, 8, 8, 10, 12 and 4 years of age, respectively (Figure \@ref(fig:figure12)b). 
 
-Historic data from all samples lists the oldest female sablefish at `r oldFem` years of age collected in `r oldFemYr` where as the oldest male sablefish with the age of `r oldMale` years old was documented for the year `r oldMaleYr`.
+Up to `r yr`, the oldest female sablefish was `r oldFem` years of age, collected in `r oldFemYr` and the oldest male sablefish was `r oldMale` years old, documented in `r oldMaleYr`.
+
 
 ```{r SablefishOceanText, echo=FALSE}
-     # back track, data from figure 19   
-     celcius  <-  read.csv(paste(path,'figure19.csv',sep=''),header=T) 
-
-     celcius$depth_stratum  <-     trimws(celcius$depth_stratum)   # trim whitespace
+     # back track, data from figure 19  
+     sea.bird     <-  "select * from SEABIRD_AverageTempPerSet where depth_stratum in('RD1','RD2','RD3')"
+     #sea.bird.ridge    <-  GetSQLData(sea.bird,"Sablefish")   # read from SQL Server
+     #write.table(sea.bird.ridge, file = paste(path,"figure14.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+     
+     celcius  <-  read.csv(paste(path,'figure14.csv',sep=''),header=T) 
+     celcius  <-  celcius[celcius$Year <= yr,]
+     celcius$depth_stratum  <-   trimws(celcius$depth_stratum)   # trim whitespace
 
      shallow.temp <- celcius[celcius$depth_stratum=="RD1",]
      mid.temp     <- celcius[celcius$depth_stratum=="RD2",]        
      deep.temp    <- celcius[celcius$depth_stratum=="RD3",]        
        
-     celcius.max <-  max(shallow.temp$Avgtemp)
-     celcius.max.shallow <- shallow.temp[shallow.temp$Avgtemp==celcius.max,]
+     celcius.max <-  max(shallow.temp$Avgtemp)   # shallow max temp and year
+     celcius.max.shallow <- shallow.temp[ which(shallow.temp$Avgtemp==celcius.max), ]
      
-     celcius.max <-  max(mid.temp$Avgtemp)
-     celcius.max.mid <-mid.temp[mid.temp$Avgtemp==celcius.max,]
+     celcius.min <-  min(shallow.temp$Avgtemp)  # shallow min temp and year
+     celcius.min.shallow <-shallow.temp[ which(shallow.temp$Avgtemp==celcius.min),]
+
+     celcius.max <-  max(mid.temp$Avgtemp) # mid max temp and year
+     celcius.max.mid <-mid.temp[ which(mid.temp$Avgtemp==celcius.max), ]
      
-     celcius.max <-  max(deep.temp$Avgtemp)
-     celcius.max.deep <-deep.temp[deep.temp$Avgtemp==celcius.max,]  
+     celcius.min <-  min(mid.temp$Avgtemp)  # mid min temp and year
+     celcius.min.mid <-mid.temp[ which(mid.temp$Avgtemp==celcius.min),]    
      
-     celcius.min <-  min(shallow.temp$Avgtemp)
-     celcius.min.shallow <-shallow.temp[shallow.temp$Avgtemp==celcius.min,]
+     celcius.max <-  max(deep.temp$Avgtemp)  # deep max temp and year
+     celcius.max.deep <-deep.temp[ which(deep.temp$Avgtemp==celcius.max),]  
      
-     celcius.min <-  min(mid.temp$Avgtemp)
-     celcius.min.mid <-mid.temp[mid.temp$Avgtemp==celcius.min,]
-     
-     celcius.min <-  min(deep.temp$Avgtemp)
-     celcius.min.deep <-deep.temp[deep.temp$Avgtemp==celcius.min,]
+     celcius.min <-  min(deep.temp$Avgtemp)  # deep min temp and year
+     celcius.min.deep <-deep.temp[ which(deep.temp$Avgtemp==celcius.min),]
      
 ```
 ## BENTHIC IMPACTS
 
-Canada’s strongest earthquake in more than 60 years hit Haida Gwaii on Saturday October 27, 2012 at 08:04 pm.  At that time, several bottom sensors were on the seafloor and recorded the seismic activity of the 7.7 magnitude earthquake.  The tremor was also felt aboard the vessel (Figure x).  
+ 
 
 
 ## OCEANOGRAPHIC TEMPERATURES AND DEPTHS
-Co-plots of average temperatures and average depths by 1-degree latitude intervals from south-west Vancouver Island to northwest Haida Gwaii can be found in Figure \@ref(fig:figure18).  The `r yr` survey data exhibit a general trend of decreasing temperature with depth over latitude.
+Co-plots of average temperatures and average depths by 1-degree latitude intervals from south-west Vancouver Island to northwest Haida Gwaii can be found in Figure \@ref(fig:figure13).  The `r yr` survey data exhibit a general trend of decreasing temperature with depth over latitude.
 
-SBE 39 recorders have been placed on survey fishing sets since 2006. In the shallow waters, the lowest average temperature was `r round(celcius.min.shallow[1,5],2)` $^\circ$C  in `r celcius.min.shallow[1,1]`; the highest average temperature was `r round(celcius.max.shallow[1,5],2)` $^\circ$C in `r celcius.min.shallow[1,1]`. Moving into the mid-depth waters, from 458-823 meters, the lowest average temperature was `r round(celcius.min.mid[1,5],2)` $^\circ$C in `r celcius.min.mid[1,1]`; the highest average temperature was `r round(celcius.max.mid[1,5],2)` $^\circ$C in `r celcius.max.mid[1,1]`. In the deepest waters, the lowest average temperature of `r round(celcius.min.deep[1,5],2)` $^\circ$C in `r celcius.min.deep[1,1]` and the highest average temperature was `r round(celcius.max.deep[1,5],2)`$^\circ$C  in `r celcius.min.deep[1,1]` (Figure \@ref(fig:figure19)).
+SBE 39 recorders have been placed on survey fishing sets since 2006. In the shallow waters, the lowest average temperature was `r round(celcius.min.shallow[1,5],2)` $^\circ$C  in `r celcius.min.shallow[1,1]`; the highest average temperature was `r round(celcius.max.shallow[1,5],2)` $^\circ$C in `r celcius.max.shallow[1,1]`. In the mid-depth waters, the lowest average temperature was `r round(celcius.min.mid[1,5],2)` $^\circ$C in `r celcius.min.mid[1,1]`; the highest average temperature was `r round(celcius.max.mid[1,5],2)` $^\circ$C in `r celcius.max.mid[1,1]`. In the deepest waters, the lowest average temperature of `r round(celcius.min.deep[1,5],2)` $^\circ$C in `r celcius.min.deep[1,1]` and the highest average temperature was `r round(celcius.max.deep[1,5],2)`$^\circ$C  in `r celcius.min.deep[1,1]` (Figure \@ref(fig:figure14)).
+
+
+## EARTHQUAKE EVENT
+
+Canada’s strongest earthquake in more than 60 years hit Haida Gwaii on Saturday October 27, 2012 at 08:04 pm.  At that time, bottom sensors were on the seafloor and recorded the seismic activity of the 7.7 magnitude earthquake.  The tremor was also felt aboard the vessel (Figure \@ref(fig:figure15)). 
 
 
 ```{r acknowledge, echo=FALSE}
@@ -447,7 +514,9 @@ SBE 39 recorders have been placed on survey fishing sets since 2006. In the shal
                                                                                                         
 ## ACKNOWLEDGEMENTS
 
-The stock assessment survey and data report is the result of the collaborative efforts of many individuals.  Wild Canadian Sablefish has provided coordination and support of the annual Sablefish survey since 1994.  The scientific staff that conducted the `r yr` sablefish research charter included `r credits[1,4]` of Archipelago Marine Research Ltd (AMR).  A special thanks to the skipper and crew of the F/V `r boat`, whose efforts made the survey successful.  In `r yr`, the crew consisted of `r credits[2,4]`.
+The stock assessment survey and data report is the result of the collaborative efforts of many individuals.  Wild Canadian Sablefish has provided coordination and support of the annual Sablefish survey since 1994.  The scientific staff that conducted the `r yr` sablefish research charter included `r credits[1,4]` of Archipelago Marine Research Ltd (AMR) and `r credits[2,4]` of Fisheries and Oceans, Canada.  
+
+A special thanks to the skipper and crew of the F/V `r boat`, whose efforts made the survey successful.  In `r yr`, the crew consisted of `r credits[3,4]`.
 
 
 \clearpage

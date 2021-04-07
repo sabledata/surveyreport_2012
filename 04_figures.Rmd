@@ -1,6 +1,6 @@
 # Figures
 
-(ref:figure1) Location of the boundaries of the five spatial areas (S~1~-S~5~) of the `r yr` stratified random survey design. The three depths strata (RD~1~-RD~3~) are colour-coded and nested within each of the five spatial strata. 
+(ref:figure1) Location of the boundaries of the mainland inlet localities, one exploratory site and the five spatial areas (S~1~-S~5~) of the stratified random survey design. The three depths strata (RD~1~-RD~3~) are colour-coded and nested within each of the five spatial strata. 
 
 ```{r figure1, fig.cap='(ref:figure1)', out.width = "410px", fig.align="center", warning=FALSE, echo=FALSE, message=FALSE, error=FALSE}
       img <- paste(basepath,'figure1.png',sep='') 
@@ -8,7 +8,7 @@
 ```
 \clearpage
 
-(ref:figure2) Start locations of survey sets (red markers) conducted in `r yr` for the stratified random survey areas S~1~ through S~5~.
+(ref:figure2) Start locations of survey sets in `r yr` conducted in the stratified random survey areas S~1~ through S~5~ (red markers) and in the exploratory area (purple markers).  The camera sets are represented by yellow markers.
 
 ```{r figure2, fig.cap='(ref:figure2)', out.width = "480px", out.height = "381px", fig.align="center", warning=FALSE, echo=FALSE, message=FALSE, error=FALSE}
       img <- paste(basepath,'figure2.png',sep='') 
@@ -16,9 +16,9 @@
 ```
 \clearpage
 
-(ref:figure3)  Image of the F/V `r boat`  used for the `r yr` sablefish research and assessment survey. 
+(ref:figure3)  Image of the F/V `r boat`  used for the `r yr` sablefish research and assessment survey. Photo credit:    .
 
-```{r figure3, fig.cap='(ref:figure3)', out.width = "480px", out.height = "360px",echo=FALSE, fig.align="center", warning=FALSE}
+```{r figure3, fig.cap='(ref:figure3)', out.width = "480px", out.height = "360px", echo=FALSE, fig.align="center", warning=FALSE}
       img  <- paste(basepath,'figure3.png',sep="") 
       knitr::include_graphics(img)
 ```
@@ -26,7 +26,7 @@
 
 (ref:figure4) Trap elements (A).  Trap gear elements consisting of 25 baited traps snapped to beckets along a groundline (B).
 
-```{r figure4, fig.cap='(ref:figure4)', out.width = "380px", out.height = "626px",echo=FALSE, fig.align="center", warning=FALSE}
+```{r figure4, fig.cap='(ref:figure4)', out.width = "370px", out.height = "610px", echo=FALSE, fig.align="center", warning=FALSE}
       img  <- paste(basepath,'figure4.png',sep="") 
       knitr::include_graphics(img)
 ```
@@ -573,8 +573,8 @@
    png(paste(basepath,'figure12.png',sep=''), width = 800, height = 924)  # -- starts writing a png to figure folder
 
    dt   <-  paste("select * from Report_Survey_GFBIO_Age_MF_Prop where SetType='StRS' and Year<=", yr, sep="")
-   dat  <-  GetSQLData(dt,"Sablefish")                                                            # read from SQL Server
-   write.table(dat, file = paste(path,'figure12.csv',sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")   
+   #dat  <-  GetSQLData(dt,"Sablefish")                                                            # read from SQL Server
+   #write.table(dat, file = paste(path,'figure12.csv',sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")   
    dat  <-  read.csv(paste(path,'figure12.csv',sep=''),header=T) # read from csv
 
    par(mfrow=c(2,1),cex=1.1)     # -- two vertical plots
@@ -707,7 +707,7 @@
 \clearpage
 (ref:figure14) Vertical density ridgeplots of mean temperatures per year as reported by set from the Sea-bird SBE 39 loggers on traps at three depth intervals, RD~1~ = shallow (100-450 m), RD~2~ = mid (450-850 m), RD~3~ = deep (850-1400 m). Lines indicate the 2.5% and 97.5% tails.
 
-```{r figure14, fig.cap='(ref:figure14)', results='asis', out.width = "480px",out.height = "616px", fig.align = "center"}
+```{r figure14, fig.cap='(ref:figure14)', results='asis', out.width = "440px",out.height = "540px", fig.align = "center"}
 
       # table SEABIRD_ReportLinePlot created  by Sablefish.dbo.Build_Seabird_tables procedure
     
@@ -748,9 +748,9 @@
 
 \clearpage
 
-(ref:figure15) Location of the epicentre of a 7.7 magnitude earthquake on Saturday October 27, 2012 at 8:04 p.m.  The inset shows the accelerometer reading that captured the earthquake event..
+(ref:figure15) Location of the epicentre of a 7.7 magnitude earthquake on Saturday October 27, 2012 at 8:04 p.m.  The accelerometer on the ocean floor captured the earthquake event (inset).
 
-```{r figure15, fig.cap='(ref:figure15)', out.width = "470px", out.height = "363px",echo=FALSE, fig.align="center", warning=FALSE}
+```{r figure15, fig.cap='(ref:figure15)', out.width = "450px", out.height = "582px",echo=FALSE, fig.align="center", warning=FALSE}
       img  <- paste(basepath,'figure15.png',sep="") 
       knitr::include_graphics(img)
 ```
