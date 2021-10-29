@@ -1,5 +1,10 @@
 # Results and Discussion
 
+## FISHING
+
+The `r yr` survey was 40 days long, beginning in Victoria, BC on October 9, with crew changes on October 20 at Coal Harbour, October 29 at Rose Harbour and November 11 at Prince Rupert.  In total, 135 sets were completed: 110 StRS sets, 3 camera sets, 2 exploratory sets and 20 standardized sets at mainland inlets.
+
+
 ```{r CatchRateText, echo=FALSE}
   # -- generate the lowest uncertainity and corresponding year for catch rate paragraph
 
@@ -49,12 +54,17 @@
 ```
 ## CATCH PER UNIT EFFORT (CPUE) 
 
-The sablefish survey of `r yr` have documented recent changes in the sablefish population structure.
+### StRS CPUE
 
-### Stratified Random Set CPUE
+In general, catch per unit effort as indexed by kilograms (Figure \@ref(fig:figure6)) and numbers (Figure \@ref(fig:figure7)) of sablefish per trap, attained the highest catch rates in the middle depth stratum (RD~2~) in most years.  
 
-Catch per unit effort (CPUE), as indexed by kilograms of sablefish per trap, increased across most offshore survey strata in 2018, and again in 2019 (Figure \@ref(fig:figure5)). The most pronounced increases occured in the middle depth strata which recorded the largest CPUEs in 2018 and 2019 since the StRS began (Figure \@ref(fig:figure6)). These increases in CPUE were the result of a relatively large increase in the number of small sablefish encountered on the survey (Figure \@ref(fig:figure7) and Figure \@ref(fig:figure8), likely due to a large recent recruitment event that has occurred coastwide [@DFO2020]. The stratified mean survey abundance in `r yr` was 35 kg/trap, which is down -17% from `r yr-1` and -13%
-from the 2018-2019 average [@DFO2021] (Figure \@ref(fig:figure9)).
+The average weight of sablefish over time in the deep depths (RD~3~) tended to be higher in the northern survey areas. In the middle (RD~2~) and shallow waters (RD~1~) the mean weights were consistently higher in area S~4~ (Figure \@ref(fig:figure8)).  
+
+CPUE over the survey years (2003 to 2012) reached over 26 kg/trap and over 9 fish/trap during 2003, 2005, 2006 and 2008. In 2012, the catch rate dropped to the lowest levels since 2003 (Figure \@ref(fig:figure9),a,b). The average weight of sablefish remained close to 3 kg over time (Figure \@ref(fig:figure9),c).
+
+### Mainland Inlet CPUE
+
+CPUE in the mainlaind inlets has  varied in a relatively predictable manner over time with peak CPUE occuring every 5-7 years. In the early part of the time series (mid-1990s) average CPUE remained relatively constant before a peak in CPUE was observed in 1999, followed by declines to consistent levels until another peak in 2003 and 2004, and again in 2011.  In 2012, CPUE (kg/trap) dropped to levels similar to 2010 (Figure \@ref(fig:figure10) a,b). Annual mean weights of sablefish in 2012 were 0.5 kg less than those at StRS sites (Figure \@ref(fig:figure10) c).
 
 
 ```{r SpeciesCompositionText, echo=FALSE}
@@ -79,9 +89,11 @@ from the 2018-2019 average [@DFO2021] (Figure \@ref(fig:figure9)).
    
    topStRSsp3   <- tolower(as.character(topStRSsp[3,1]))                      
    topStRSsc3   <- firstup(tolower(as.character(topStRSsp[3,2])))
+   topStRSsc3   <- gsub("Sebastes aleutianus","Sebastes aleutianus/melanostictus", topStRSsc3) 
    
    topStRSsp4   <- tolower(as.character(topStRSsp[4,1]) )                    
-   topStRSsc4   <- firstup(tolower(as.character(topStRSsp[4,2])))  
+   topStRSsc4   <- firstup(tolower(as.character(topStRSsp[4,2])))
+   topStRSsc4   <- gsub("Sebastes aleutianus","Sebastes aleutianus/melanostictus", topStRSsc4)    
    
    topStRSsp5   <- tolower(as.character(topStRSsp[5,1]))                      
    topStRSsc5   <- firstup(tolower(as.character(topStRSsp[5,2]))) 
@@ -109,13 +121,13 @@ from the 2018-2019 average [@DFO2021] (Figure \@ref(fig:figure9)).
    #write.table(strsSpCom, file = paste(path,"results03.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")   
    strsSpCom   <-  read.csv(paste(path,'results03.csv',sep=''),header=T) 
    
-   roundfishS   <- strsSpCom[1,1]
-   rockfishS    <- strsSpCom[1,2]
-   flatfishS    <- strsSpCom[1,3]
+   roundfishS   <- strsSpCom[1,1]    # number of roundfish
+   rockfishS    <- strsSpCom[1,2]    # number of rockfish
+   flatfishS    <- strsSpCom[1,3]    # number of invertebrates
    invertS      <- strsSpCom[1,4]
    mammalS      <- strsSpCom[1,5]
    birdS        <- strsSpCom[1,6]
-   #totalS       <- firstup(as.character(strsSpCom[1,7])) # taxonomic unit count for StRS with capital
+   totalS       <- firstup(as.character(strsSpCom[1,7])) # taxonomic unit count for StRS with capital
    totalS       <- as.character(strsSpCom[1,7]) # taxonomic unit count for StRS
    
    
@@ -128,8 +140,8 @@ from the 2018-2019 average [@DFO2021] (Figure \@ref(fig:figure9)).
                            "and (SPECIES_CODE <> N'455') and (Year = ",yr,") ",
                            "order by catchkg DESC", sep="") 
    #topInletsp   <- GetSQLData(topInlet,"Sablefish") 
-   #write.table(topInletsp, file = paste(path,"results03I.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")    
-   topInletsp   <-  read.csv(paste(path,'results03I.csv',sep=''),header=T)
+   #write.table(topInletsp, file = paste(path,"results03Inlet.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")    
+   topInletsp   <-  read.csv(paste(path,'results03Inlet.csv',sep=''),header=T)
       
    topInletsp1  <- as.character(topInletsp[1,1])                    # -- inlet top 2 species names
    topInletsc1  <- firstup(tolower(as.character(topInletsp[1,2])))  # -- inlet top 2 species science names
@@ -173,11 +185,11 @@ from the 2018-2019 average [@DFO2021] (Figure \@ref(fig:figure9)).
 
 ## CATCH COMPOSITION
 
-A total of `r totalS[1]` taxonomic groups were represented in the catches in StRS sets in `r yr`.  These included `r roundfishS[1]` roundfish species, `r rockfishS[1]` rockfish species, `r flatfishS[1]`  flatfish species and `r invertS[1]` invertebrate species. Other than sablefish, the most common species, by weight,  were  `r topStRSsp1[1]` (*`r topStRSsc1`*), `r topStRSsp2` (*`r topStRSsc2`*), `r topStRSsp3` (*`r topStRSsc3`*),   `r topStRSsp4` (*`r topStRSsc4`*) and  `r topStRSsp5` (*`r topStRSsc5`*) (Table \@ref(tab:table2)).
+A total of `r totalS[1]` taxonomic groups were represented in the catches in StRS sets in `r yr`.  These included `r roundfishS[1]` roundfish species, `r rockfishS[1]` rockfish species, `r flatfishS[1]`  flatfish species and `r invertS[1]` invertebrate species. Other than sablefish, the most common species, by weight,  were  `r topStRSsp1[1]` (*`r topStRSsc1`*), `r topStRSsp2` (*`r topStRSsc2`*), `r topStRSsp3` (*`r topStRSsc3`*),   `r topStRSsp4` (*`r topStRSsc4`*) and  `r topStRSsp5` (*`r topStRSsc5`*) (Table \@ref(tab:table3)).
 
-A total of `r totalI` taxonomic groups were represented in the catches from traditional standardized sets conducted in mainland inlet localities in `r yr`.  These included `r roundfishI` roundfish species, `r rockfishI`  rockfish species, `r flatfishI` flatfish species and `r invertI` invertebrate species.  The most common species, by weight, other than sablefish were `r topInletsp1` (*`r topInletsc1`*) and `r topInletsp2` (*`r topInletsc2`*) (Table \@ref(tab:table3)).
+A total of `r totalI` taxonomic groups were represented in the catches from traditional standardized sets conducted in mainland inlet localities in `r yr`.  These included `r roundfishI` roundfish species, `r rockfishI`  rockfish species, `r flatfishI` flatfish species and `r invertI` invertebrate species.  The most common species, by weight, other than sablefish were `r topInletsp1` (*`r topInletsc1`*) and `r topInletsp2` (*`r topInletsc2`*) (Table \@ref(tab:table4)).
 
-Two taxonomic groups were represented in the catches at the exploratory sites in `r yr`.  Only one sablefish (*Anoplopoma fimbria*) and one Pacific ocean perch (*Sebastes alutus*) were captured (Table \@ref(tab:table4)).
+Two taxonomic groups were represented in the catches at the exploratory sites in `r yr`.  Only one sablefish (*Anoplopoma fimbria*) and one Pacific ocean perch (*Sebastes alutus*) were captured (Table \@ref(tab:table5)).
 
 ```{r SamplingWords, echo=FALSE}
     # inline text query Sablefish.dbo.GFBIO_RESEARCH_SAMPLE_DETAILS for the counts of Sablefish from StRS sets
@@ -189,12 +201,11 @@ Two taxonomic groups were represented in the catches at the exploratory sites in
                          "sum(sd.[Fork Len Tag Sample Count])             AS taglengthsample,  " ,
                          "sum(sd.Sample_count)                            AS samplecount " ,
                          "from dbo.GFBIO_RESEARCH_SAMPLE_DETAILS AS sd INNER JOIN " ,         
-                         "dbo.GFBIO_SABLEBIO_TRIP_SET2 AS rt ON " ,
+                         "dbo.GFBIO_SABLEBIO_TRIP_SET AS rt ON " ,
                          "sd.TRIP_ID = rt.TRIP_ID AND  sd.[SET] = rt.SET_NUMBER " ,
                          "where (sd.Year =", yr,") group by rt.SABLE_SET_TYPE",sep="")
-
-    #countStRS   <- GetSQLData(catchStRS,"Sablefish")
-    #write.table(countStRS, file = paste(path,"results04.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+    countStRS   <- GetSQLData(catchStRS,"Sablefish")
+    write.table(countStRS, file = paste(path,"results04.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",") 
     countStRS   <-  read.csv(paste(path,'results04.csv',sep=''),header=T) 
     
     # -- Sablefish.dbo.procReport_Survey_LenMF pulls length data from table GFBIO_SABLEBIO_VW 
@@ -219,8 +230,6 @@ Two taxonomic groups were represented in the catches at the exploratory sites in
     
     firstyrfem <-   lendata[lendata$year == yr & lendata$sex == 2,] 
     firstyrmal <-   lendata[lendata$year == yr & lendata$sex == 1,] 
-    
-
       
     lenMF      <-   lendata[lendata$year <= yr,] 
     brk        <-   seq(min(lenMF$length)-1,max(lenMF$length)+1)
@@ -375,47 +384,135 @@ Two taxonomic groups were represented in the catches at the exploratory sites in
       deepsfema   <- substr(deepsfem, 1, nchar(deepsfem)-2)   # trim trailing comma
       deepsfemale <- sub(",([^,]*)$", " and\\1", deepsfema)   # replace last comma with and
  
-   # -- other fish counts
-     othfish      <-   paste(" select species_name, sum(Sample_count) as count   ",
-                             " from dbo.GFBIO_RESEARCH_SAMPLE_DETAILS_OTHER_FISH ",
-                             " where (Year = ", yr, ") group by species_name, species ",
-                             " order by species", sep="")
-     #otherfish    <-   GetSQLData(othfish,"Sablefish")
-     #write.table(otherfish, file = paste(path,"results07.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")      
-     otherfish    <-   read.csv(paste(path,'results07.csv',sep=''),header=T)
-    
-
+  #  note that 2 re-releases have unknown length  total is 154 + 1 dead for 2012, one tag missing from GFBio : 73190	129	A00228975	A00181509
 ```
 ## SABLEFISH SAMPLING
 
-A detailed breakdown of the fate of the catch in each trap for the `r yr` survey is listed in Appendix \@ref(app:fourth-appendix). 
+A detailed breakdown of the fate of the catch in each trap for the `r yr` survey is listed in Appendix \@ref(app:fifth-appendix). 
 
-During the `r yr` StRS, a total of `r format(countStRS[1,2], big.mark=",")` sablefish were caught.   Of that total, `r format(countStRS[1,5], big.mark=",")` were tagged and released and `r format(countStRS[1,7], big.mark=",")` were retained for biological sampling. Of the tagged fish, `r countStRS[1,3]` were previously tagged fish that were re-released with a new tag.  One previously tagged fish was retained for sampling (Appendix \@ref(app:fifth-appendix)).
+In the StRS portion of the survey, a total of `r format(countStRS[3,2], big.mark=",")` sablefish were caught.   Of that total, `r format(countStRS[3,5], big.mark=",")` were tagged and released and `r format(countStRS[3,7], big.mark=",")` were retained for biological sampling. Of the tagged fish, `r countStRS[3,3]` were previously tagged fish that were re-released with a new tag.  In addition, one previously tagged fish was retained for sampling (Appendix \@ref(app:sixth-appendix)).
 
-Overall, the StRS sets had a higher proportion of females than males over `r stratafemale` (Table \@ref(tab:table6)).  More females than males were seen in the shallow depth stratum within `r shallsfemale`.  In the mid depth stratum, there were more males than females in `r midsmale`.  The deepest depth stratum saw more females in spatial strata `r deepsfemale`.  
+During the inlet standardized portion of the survey, a total of `r format(countStRS[1,2], big.mark=",")` sablefish were caught.  Of that total, `r format(countStRS[1,5], big.mark=",")` were tagged and released and `r format(countStRS[1,7], big.mark=",")` were retained for biological sampling. Of the tagged fish, `r countStRS[1,3]` were previously tagged fish that were re-released with a new tag (Appendix \@ref(app:sixth-appendix)).
 
-In `r yr`, the average mean fork length for the `r format(length(firstyrfem$sex), big.mark=",")` females was `r mean(females)` cm  and the average mean fork length for the `r format(length(firstyrmal$sex), big.mark=",")` males was `r round(mavgyr1$AvL,1) ` cm.  The mean length of both females and males reached their lowest mean size since 2003 (Figure \@ref(fig:figure14)). 
+One sablefish was caught on camera set 26 but not sampled (Table \@ref(tab:table5)).  One sablefish was caught on experimental set 43 and retained for biological sampling (Appendix \@ref(app:sixth-appendix)).
 
-On average, female sablefish grow faster and reach a far greater size (Figure \@ref(fig:figure11)a) compared to males (Figure \@ref(fig:figure11)b).
+Overall, the StRS sets had a higher proportion of females than males over `r stratafemale` (Table \@ref(tab:table6)).  More females than males were seen in the shallow depth stratum within `r shallsfemale`.  In the mid depth stratum, there were more males than females in `r midsmale`.  The deepest depth stratum saw more females in spatial strata `r deepsfemale`.
+
+Significant differences in length distributions between female and male sablefish are exhibited in the data collected from the StRS portion of the 2003 - `r yr+1` surveys. The mean fork length ($\bar{x}$) for the  `r format(tf, big.mark=",") ` females was `r mLf` cm and the mean fork length ($\bar{x}$) for the `r format(tm, big.mark=",")` males was `r mLm` cm (Figure \@ref(fig:figure11),a). 
+
+In `r yr`, the mean fork length for the `r format(length(firstyrfem$sex), big.mark=",")` females was `r mean(females)` cm  and the mean fork length for the `r format(length(firstyrmal$sex), big.mark=",")` males was `r round(mavgyr1$AvL,1) ` cm (Figure \@ref(fig:figure11),b). 
+
+On average, female sablefish grow faster and reach a far greater size (Figure \@ref(fig:figure12),a) compared to males (Figure \@ref(fig:figure12),b).
+
+```{r rebsWords, echo=FALSE}
+
+   # total counts of re/bs collected
+   rougheye.yr <-  read.csv(paste(path,'appendixG.csv',sep=''),header=T)
+
+   # count the guesses
+   counter.rebs   <- paste("SELECT  year, COUNT(DISTINCT SPECIMEN_ID) AS Expr1, EXISTENCE_ATTRIBUTE_DESC ",
+                          "FROM  (SELECT  year, TRIP_ID, FE_MAJOR_LEVEL_ID, SPECIES_CODE, SPECIES_COMMON_NAME, ",
+                          "EXISTENCE_ATTRIBUTE_CODE, SPECIMEN_ID, EXISTENCE_ATTRIBUTE_DESC ",
+                          "FROM  dbo.gfbio_species_guess ",
+                          "WHERE  (year = 2012) AND (EXISTENCE_ATTRIBUTE_DESC LIKE '%user guess%')) AS grp ",
+                          "GROUP BY year, EXISTENCE_ATTRIBUTE_DESC",sep="")
+    #count.rebs.guess.word   <- GetSQLData(counter.rebs,"Sablefish")
+    #write.table(count.rebs.guess.word, file = paste(path,"results04b.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+    count.rebs.guess.word   <-  read.csv(paste(path,'results04b.csv',sep=''),header=T)   
 
 
+    # inline text query for bs/re
+    count.rebs   <- paste("SELECT  COUNT(DISTINCT SPECIMEN_ID) AS CountREBS ",
+                         "FROM    (SELECT year, TRIP_ID, FE_MAJOR_LEVEL_ID, SPECIES_CODE, SPECIES_COMMON_NAME, ",
+                         "EXISTENCE_ATTRIBUTE_CODE, SPECIMEN_ID, EXISTENCE_ATTRIBUTE_DESC ",
+                         "FROM            dbo.gfbio_species_guess ",
+                         "WHERE        (year = ", yr,")) AS rebsgrp ",sep="")
+    #count.rebs.word   <- GetSQLData(count.rebs,"Sablefish")
+    #write.table(count.rebs.word, file = paste(path,"results04c.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+    count.rebs.word   <-  read.csv(paste(path,'results04c.csv',sep=''),header=T)
+    
+    count.failure     <-paste("select COUNT(DISTINCT SPECIMEN_ID) AS failure  ",
+                         "FROM (SELECT  year, TRIP_ID, FE_MAJOR_LEVEL_ID, SPECIES_CODE, SPECIES_COMMON_NAME, ",
+                         "EXISTENCE_ATTRIBUTE_CODE, SPECIMEN_ID, EXISTENCE_ATTRIBUTE_DESC ",
+                          "FROM dbo.gfbio_species_guess ",
+                          "WHERE   (year = ", yr,") AND (EXISTENCE_ATTRIBUTE_CODE IN (22))) AS rebsgrp",sep="")  #resolved genetic id
+    #count.failure.word   <- GetSQLData(count.failure ,"Sablefish")
+    #write.table(count.failure.word, file = paste(path,"results04d.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+    count.failure.word   <-  read.csv(paste(path,'results04d.csv',sep=''),header=T) 
+    
+    # DNA analysis, always double check these numbers    
+    count.bs     <-paste("select COUNT(DISTINCT SPECIMEN_ID) AS bs ",
+                         "FROM (SELECT  year, TRIP_ID, FE_MAJOR_LEVEL_ID, SPECIES_CODE, SPECIES_COMMON_NAME, ",
+                         "EXISTENCE_ATTRIBUTE_CODE, SPECIMEN_ID, EXISTENCE_ATTRIBUTE_DESC ",
+                          "FROM dbo.gfbio_species_guess ",
+                          "WHERE   (year = ", yr,") AND (EXISTENCE_ATTRIBUTE_CODE IN (18))) AS rebsgrp",sep="")
+    #count.bs.word   <- GetSQLData(count.bs,"Sablefish")
+    #write.table(count.bs.word, file = paste(path,"results04e.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+    count.bs.word   <-  read.csv(paste(path,'results04e.csv',sep=''),header=T)   
+    
+    count.hybrid     <-paste("select COUNT(DISTINCT SPECIMEN_ID) AS hybrid ",
+                         "FROM (SELECT  year, TRIP_ID, FE_MAJOR_LEVEL_ID, SPECIES_CODE, SPECIES_COMMON_NAME, ",
+                         "EXISTENCE_ATTRIBUTE_CODE, SPECIMEN_ID, EXISTENCE_ATTRIBUTE_DESC ",
+                          "FROM dbo.gfbio_species_guess ",
+                          "WHERE   (year = ", yr,") AND (EXISTENCE_ATTRIBUTE_CODE IN (20,21))) AS rebsgrp",sep="")
+    #count.hybrid.word   <- GetSQLData(count.hybrid ,"Sablefish")
+    #write.table(count.hybrid.word, file = paste(path,"results04f.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+    count.hybrid.word   <-  read.csv(paste(path,'results04f.csv',sep=''),header=T)   
+    
+    count.re     <-paste("select COUNT(DISTINCT SPECIMEN_ID) AS re ",
+                         "FROM (SELECT  year, TRIP_ID, FE_MAJOR_LEVEL_ID, SPECIES_CODE, SPECIES_COMMON_NAME, ",
+                         "EXISTENCE_ATTRIBUTE_CODE, SPECIMEN_ID, EXISTENCE_ATTRIBUTE_DESC ",
+                          "FROM dbo.gfbio_species_guess ",
+                          "WHERE   (year = ", yr,") AND (EXISTENCE_ATTRIBUTE_CODE IN (19))) AS rebsgrp",sep="")  #resolved genetic id
+    #count.re.word   <- GetSQLData(count.re,"Sablefish")
+    #write.table(count.re.word, file = paste(path,"results04g.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+    count.re.word   <-  read.csv(paste(path,'results04g.csv',sep=''),header=T) 
+    
+
+
+```
+
+## OTHER FISH SAMPLING
+
+In `r yr`, length, sex, maturity, otoliths and DNA samples were collected for rougheye/blackspotted rockfish. Of the `r sum(rougheye.yr$DNA.Sample.Count)` DNA samples, `r count.rebs.guess.word[1,2]` were visually determined as blackspotted rockfish and `r count.rebs.guess.word[2,2]` as rougheye rockfish (Appendix \@ref(app:seventh-appendix)).  DNA analysis reveal that `r count.bs.word[1,1]` had a genetic id of blackspotted rockfish, `r count.re.word[1,1]` were determined to be rougheye rockfish, `r count.hybrid.word[1,1]` were designated as hybrid species and `r count.failure.word[1,1]` were unsuccessful.
+
+Fork length and sex were collected for arrowtooth flounder (*Atheresthes stomias*),  aurora rockfish (*Sebastes aurora*), greenstriped rockfish (*Sebastes elongatus*), lingcod (*Ophiodon elongatus*), Pacific cod (*Squalus acanthias*), Pacific halibut (*Hippoglossus stenolepis*), redbanded rockfish (*Sebastes babcocki*), rosethorn rockfish (*Sebastes helvomaculatus*), shortraker rockfish (*Sebastes borealis*), walleye pollock (*Theragra chalcogramma*), yelloweye rockfish (*Sebastes ruberrimus*) and yellowmouth rockfish (*Sebastes reedi*) (Appendix \@ref(app:eighth-appendix)). 
+
+Pre-caudal length and sex were collected for the tagged North Pacific spiny dogfish (*Squalus acanthias*).  Snout to anal fin lengths and sex were collected for giant grenadier (*Albatrossia pectoralis*) and Pacific grenadier (*Coryphaenoides acrolepis*). Total length and sex were collected for dover sole (*Microstomus pacificus*), giant blobsculpin (*Psychrolutes phrictus*), longspine thornyhead (*Sebastolobus altivelis*), north Pacific spiny dogfish (second measurement), Pacific flatnose (*Antimora microlepis*), pink snailfish (*Paraliparis rosaceus*), and shortspine thornyhead (*Sebastolobus alascanus*) (Appendix \@ref(app:eighth-appendix)).
+
+```{r SableRecovered, echo=FALSE}
+      # use data from table 7
+      tag.rec <-  read.csv(paste(path,'table7.csv',sep=''), header=T)
+      
+      tag.rec[is.na(tag.rec)] <- 0   # convert NA to zero in whole table
+      tag.rec$YearGroups      <- as.character(tag.rec$YearGroups)  # change column to character
+      tag.rec$YearGroups      <- gsub("Grp1.", "", tag.rec$YearGroups)
+      tag.rec$YearGroups      <- gsub("Grp2.", "", tag.rec$YearGroups)
+      tag.rec$YearGroups      <- gsub("Grp3.", "", tag.rec$YearGroups)  
+      tag.rec$YearGroups      <- gsub("Grp4.", "", tag.rec$YearGroups)      
+      tag.rec$Recoveries      <- as.numeric(rowSums(tag.rec[,2:8], na.rm=TRUE))
+      
+      ad.row <- c('Total Counts',sum(tag.rec$X.10.km),sum(tag.rec$X11.50.km),sum(tag.rec$X51.100.km),
+                          sum(tag.rec$X101.250.km),sum(tag.rec$X251.500.km),sum(tag.rec$X501.1000.km),
+                          sum(tag.rec$X.1000.km), sum(tag.rec$Recoveries) )
+      tag.rec.percent <- rbind(tag.rec,ad.row)
+      
+      tag.10km  <- sum(tag.rec$X.10.km) / sum(tag.rec$Recoveries) * 100     
+      tag.50km  <- round((sum(tag.rec$X.10.km) + sum(tag.rec$X11.50.km))/ sum(tag.rec$Recoveries) * 100,0)
+      tag.100km <- (sum(tag.rec$X.10.km) + sum(tag.rec$X11.50.km) + sum(tag.rec$X51.100.km))/ sum(tag.rec$Recoveries) * 100
+      
+      liberty5yrs <-  round(as.numeric(tag.rec$Recoveries[1] + tag.rec$Recoveries[2] + tag.rec$Recoveries[3])/ as.numeric(tag.rec.percent[6,9]) * 100,0)
+      
+
+```
 
 ## RECOVERED TAGGED SABLEFISH
 
+Of the `r countStRS[1,3] + countStRS[2,3] + countStRS[3,3] + countStRS[1,4] + countStRS[2,4] + countStRS[3,4]` Canadian tagged fish that were recovered on the survey, the majority (`r tag.50km`%) had travelled within 50 kilometers of the release site.  Most of these tagged fish (`r liberty5yrs`%) were recaptured within 5 years at liberty (Table \@ref(tab:table7)).  
 
 
-TBD
-Of the `r countStRS[1,3]` Canadian tagged fish that were recovered on the survey, the majority (79%) had travelled within 50 kilometers of the release site.  Most of these tagged fish (70%) were recaptured within 5 years at liberty .  
-
-
-## OTHER FISH SAMPLING AND TAGGING
-
-Length, sex, maturity, otoliths and DNA samples were collected for 395 rougheye/blackspotted rockfish.  (Appendix \@ref(app:sixth-appendix)).
-Fork length, sex, collected for arrowtooth flounder,  aurora rockfish, greenstriped rockfish, lingcod, Pacific cod, Pacific halibut, redbanded rockfish, rosethorn rockfish,
-shortraker rockfish, walleye pollock, yelloweye rockfish and yellowmouth rockfish (Appendix \@ref(app:seventh-appendix)).  Total length, sex, collected for dover sole, giant blobsculpin, longspine thornyhead, north Pacific spiny dogfish, Pacific flatnose, pink snailfish, and shortspine thornyhead (Appendix \@ref(app:eighth-appendix)).
-
-North Pacific spiny dogfish with a pre-caudal length greater than seventy centimetres were tagged with pop-off satellite tags.  Four tagged fish were released in each of area 3D and 5A, two in area 5B and eight in area 5E (Figure \@ref(tab:table8)).
-
+## TAGGED NORTH PACIFIC SPINY DOGFISH
+North Pacific spiny dogfish with a pre-caudal length greater than seventy centimetres were tagged and released with pop-off satellite tags (Table \@ref(tab:table8)) throughout the survey area (Figure \@ref(fig:figure2)).   
 
 
 ```{r SablefishAgesText, echo=FALSE}
@@ -443,64 +540,89 @@ North Pacific spiny dogfish with a pre-caudal length greater than seventy centim
    oldMale     <-  oldageMale[1,2]               # -- oldest male age
    oldMaleYr   <-  oldageMale[1,3]               # -- year captured
    
+   # print(paste("f:",oldageFem, ", m: ",oldageMale,sep=""))
+
 ```
 
 ## SABLEFISH AGES
 
-The highest proportion of female ages in the StRS sets for 2003 through to 2010 were 3, 4, 5, 6, 7, 8, 9, 10 years of age, respectively.  Then, another cohort appeared in 2011 and 2012, showing up as 3 and 4 year olds (Figure \@ref(fig:figure12)a).
+The highest proportion of female ages in the StRS sets for 2003 through to 2010 were 3, 4, 5, 6, 7, 8, 9, 10 years of age, respectively.  Then, another cohort appeared in 2011 and 2012, showing up as 3 and 4 year olds (Figure \@ref(fig:figure13), a).
 
-The highest proportion of male ages in StRS sets for 2003 through to 2012 were 3, 5, 5, 6, 8, 8, 8, 10, 12 and 4 years of age, respectively (Figure \@ref(fig:figure12)b). 
+The highest proportion of male ages in StRS sets for 2003 through to 2012 were 3, 5, 5, 6, 8, 8, 8, 10, 12 and 4 years of age, respectively (Figure \@ref(fig:figure13), b). 
 
 Up to `r yr`, the oldest female sablefish was `r oldFem` years of age, collected in `r oldFemYr` and the oldest male sablefish was `r oldMale` years old, documented in `r oldMaleYr`.
 
 
 ```{r SablefishOceanText, echo=FALSE}
      # back track, data from figure 19  
-     sea.bird     <-  "select * from SEABIRD_AverageTempPerSet where depth_stratum in('RD1','RD2','RD3')"
+     sea.bird     <-  "select * from SEABIRD_AverageTempPerSet where depth_stratum in('RD1','RD2','RD3')"  
      #sea.bird.ridge    <-  GetSQLData(sea.bird,"Sablefish")   # read from SQL Server
-     #write.table(sea.bird.ridge, file = paste(path,"figure14.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+     #write.table(sea.bird.ridge, file = paste(path,"figure15.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",") 
      
-     celcius  <-  read.csv(paste(path,'figure14.csv',sep=''),header=T) 
+     celcius  <-  read.csv(paste(path,'figure15.csv',sep=''),header=T) 
      celcius  <-  celcius[celcius$Year <= yr,]
+     # View(celcius)
      celcius$depth_stratum  <-   trimws(celcius$depth_stratum)   # trim whitespace
 
      shallow.temp <- celcius[celcius$depth_stratum=="RD1",]
      mid.temp     <- celcius[celcius$depth_stratum=="RD2",]        
-     deep.temp    <- celcius[celcius$depth_stratum=="RD3",]        
+     deep.temp    <- celcius[celcius$depth_stratum=="RD3",]  
+     
+     # View(shallow.temp)
        
-     celcius.max <-  max(shallow.temp$Avgtemp)   # shallow max temp and year
-     celcius.max.shallow <- shallow.temp[ which(shallow.temp$Avgtemp==celcius.max), ]
+     celcius.max.sh    <-  max(shallow.temp$Avgtemp)   # shallow max temp and year
+     celcius.max.shallow <- shallow.temp[ which(shallow.temp$Avgtemp==celcius.max.sh), ]
      
-     celcius.min <-  min(shallow.temp$Avgtemp)  # shallow min temp and year
-     celcius.min.shallow <-shallow.temp[ which(shallow.temp$Avgtemp==celcius.min),]
+     celcius.min.sh    <-  min(shallow.temp$Avgtemp)  # shallow min temp and year
+     celcius.min.shallow <-shallow.temp[ which(shallow.temp$Avgtemp==celcius.min.sh),]
 
-     celcius.max <-  max(mid.temp$Avgtemp) # mid max temp and year
-     celcius.max.mid <-mid.temp[ which(mid.temp$Avgtemp==celcius.max), ]
+     celcius.max.md    <-  max(mid.temp$Avgtemp) # mid max temp and year
+     celcius.max.mid <-mid.temp[ which(mid.temp$Avgtemp==celcius.max.md), ]
      
-     celcius.min <-  min(mid.temp$Avgtemp)  # mid min temp and year
-     celcius.min.mid <-mid.temp[ which(mid.temp$Avgtemp==celcius.min),]    
+     celcius.min.md    <-  min(mid.temp$Avgtemp)  # mid min temp and year
+     celcius.min.mid <-mid.temp[ which(mid.temp$Avgtemp==celcius.min.md),]    
      
-     celcius.max <-  max(deep.temp$Avgtemp)  # deep max temp and year
-     celcius.max.deep <-deep.temp[ which(deep.temp$Avgtemp==celcius.max),]  
+     celcius.max.dp    <-  max(deep.temp$Avgtemp)  # deep max temp and year
+     celcius.max.deep <-deep.temp[ which(deep.temp$Avgtemp==celcius.max.dp ),]  
      
-     celcius.min <-  min(deep.temp$Avgtemp)  # deep min temp and year
-     celcius.min.deep <-deep.temp[ which(deep.temp$Avgtemp==celcius.min),]
+     celcius.min.dp    <-  min(deep.temp$Avgtemp)  # deep min temp and year
+     celcius.min.deep <-deep.temp[ which(deep.temp$Avgtemp==celcius.min.dp ),]
+     
+     # View(celcius.max.shallow.yr)
+     # View(celcius.max.mid.yr)
+     # View(celcius.max.deep.yr)
+     
      
 ```
-## BENTHIC IMPACTS
 
- 
+```{r SablefishOceanText2, echo=FALSE}
+     # table SEABIRD_ReportLinePlot created in the Sablefish.dbo.Build_Seabird_tables procedure
 
+     sbe.set <-  read.csv(paste(path,'appendixD.csv', sep=''),header=T)
+    
+     whatTrap  <-  paste("select * from SEABIRD_ACCEL_byTrap where year in(",yr,") order by [set]",sep="")
+     #whatTraps <-  GetSQLData(whatTrap ,"Sablefish")  # in order to be able to comment on which traps the sensors were placed
+     #write.table(whatTraps, file = paste(path,'results23.csv',sep=''), row.names=FALSE, na="",col.names=TRUE,  sep=",")
+     whatTraps <-   read.csv(paste(path,'results23.csv',sep=''),header=T)
+     #  View(whatTraps)
+     
+    
+``` 
 
 ## OCEANOGRAPHIC TEMPERATURES AND DEPTHS
-Co-plots of average temperatures and average depths by 1-degree latitude intervals from south-west Vancouver Island to northwest Haida Gwaii can be found in Figure \@ref(fig:figure13).  The `r yr` survey data exhibit a general trend of decreasing temperature with depth over latitude.
 
-SBE 39 recorders have been placed on survey fishing sets since 2006. In the shallow waters, the lowest average temperature was `r round(celcius.min.shallow[1,5],2)` $^\circ$C  in `r celcius.min.shallow[1,1]`; the highest average temperature was `r round(celcius.max.shallow[1,5],2)` $^\circ$C in `r celcius.max.shallow[1,1]`. In the mid-depth waters, the lowest average temperature was `r round(celcius.min.mid[1,5],2)` $^\circ$C in `r celcius.min.mid[1,1]`; the highest average temperature was `r round(celcius.max.mid[1,5],2)` $^\circ$C in `r celcius.max.mid[1,1]`. In the deepest waters, the lowest average temperature of `r round(celcius.min.deep[1,5],2)` $^\circ$C in `r celcius.min.deep[1,1]` and the highest average temperature was `r round(celcius.max.deep[1,5],2)`$^\circ$C  in `r celcius.min.deep[1,1]` (Figure \@ref(fig:figure14)).
+SBE 39 recorder data was successfully collected from `r length(sbe.set$sbe.39[sbe.set$sbe.39=='x'])` sets  in `r yr` (Appendix \@ref(app:fourth-appendix)).  Co-plots of average temperatures and average depths by 1-degree latitude intervals from south-west Vancouver Island to northwest Haida Gwaii can be found in Figure \@ref(fig:figure14).  The `r yr` survey data exhibit a general trend of decreasing temperature with depth over latitude.
 
+SBE 39 recorders have been placed on survey fishing sets since 2006. In the shallow waters, the lowest to highest average temperatures reported by set were `r round(celcius.min.shallow[1,5],2)` $^\circ$C  (`r celcius.min.shallow[1,1]`) to `r round(celcius.max.shallow[1,5],2)` $^\circ$C (`r celcius.max.shallow[1,1]`). In the mid-depth waters, the lowest to highest average temperatures reported by set were `r round(celcius.min.mid[1,5],2)` $^\circ$C (`r celcius.min.mid[1,1]`) to `r round(celcius.max.mid[1,5],2)` $^\circ$C (`r celcius.max.mid[1,1]`). In the deepest waters, the lowest to highest average temperatures reported by set were `r round(celcius.min.deep[1,5],2)` $^\circ$C (`r celcius.min.deep[1,1]`) to `r round(celcius.max.deep[1,5],2)`$^\circ$C (`r celcius.min.deep[1,1]`) (Figure \@ref(fig:figure15)).
+
+
+## BENTHIC IMPACTS STUDY DATA COLLECTION
+
+The Nuytco autonomous camera system gathered the pilot MP4 footage from various camera angles on sets 5, 6 and 26.  Accelerometer readings of g-force (m/s$^2$) were successfully collected from `r length(sbe.set$hobo[sbe.set$hobo=='x'])` sets to reveal trap movement in all directions (Appendix \@ref(app:fourth-appendix)).
 
 ## EARTHQUAKE EVENT
 
-Canada’s strongest earthquake in more than 60 years hit Haida Gwaii on Saturday October 27, 2012 at 08:04 pm.  At that time, bottom sensors were on the seafloor and recorded the seismic activity of the 7.7 magnitude earthquake.  The tremor was also felt aboard the vessel (Figure \@ref(fig:figure15)). 
+Canada’s strongest earthquake in more than 60 years hit Haida Gwaii on Saturday October 27, 2012 at 08:04 pm.  At that time, bottom sensors were on the seafloor and recorded the seismic activity of the 7.7 magnitude earthquake (Figure \@ref(fig:figure16)). 
 
 
 ```{r acknowledge, echo=FALSE}

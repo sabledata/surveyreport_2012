@@ -1,6 +1,6 @@
 # Tables
 
-(ref:table1Caption) The four components of the `r yr` Sablefish research and assessment survey.  
+(ref:table1Caption) The four components of the `r yr` sablefish research and assessment survey.  
 \ \
 \ \
 
@@ -8,7 +8,7 @@
 ```{r table1, echo=FALSE}
 
 #  Create a dataframe 4 columns wide
- Component<- c("Stratified random", "sampling (StRS),", "Type 3 (Random", "tagging)",
+  Component<- c("Stratified random", "sampling (StRS),", "Type 3 (Random", "tagging)",
                 "Traditional Inlet","Standardized", "", "" ,
                 "Exploratory","","","",
                 "Benthic impact","","","","") 
@@ -19,26 +19,34 @@
   
   Locations<- c("Five spatial strata", "(S1-S5)", "","",
                 "Dean/Burke Channel", "Finlayson Channel", "Gil Island", "Portland Inlet" ,
-                "Quatsino Sound", "","","",
-                "Coastwide","","","","")
+                "Cliffe Point", "Koskimo Bay","","",
+                "SW Vancouver Island","","","","")
   
   Protocol <- c("1/3 of traps used for tagging,","1/3 of traps used for biosamples,", 
                 "(50 piece LS(W)MO),","1/3 of traps discarded",
                 "1/2 of traps used for tagging,","1/2 of traps used for biosamples","(50 piece LSWMO)","" ,
                 "1/3 of traps used for biosamples"," (50 piece LSWMO),","1/3 of traps used for tagging","and 1/3 of traps discarded",
                 "Camera system deployed on","select sets.  Accelerometers","deployed on camera and survey", "sets.","" )
+   
+  Completed2012   <-  c("110","","","",
+                        "5","5","5","5",
+                        "2","","","",
+                        "3","","","","")
   
-  component        <-   data.frame(Component, Bait, Locations, Protocol)
-  names(component) <-   c('Component', 'Bait/Method', 'Locations', 'Protocol')
+  component        <-   data.frame(Component, Bait, Locations, Protocol, Completed2012)
+  names(component) <-   c('Component', 'Bait/Method', 'Locations', 'Protocol','Total Sets')
+  
   
        kableExtra::kable(component, booktabs = TRUE,linesep = "",
                    format = "latex",
+                   align=c("l","l","l","l","c"),
                    caption = "(ref:table1Caption)")%>%
                    row_spec(0,    bold = T) %>%
-                   row_spec(4,  hline_after = T) %>%
-                   row_spec(8,  hline_after = T) %>%
-                   row_spec(12,  hline_after = T) %>%         
-       kableExtra::kable_styling(font_size = 10, position = "left",latex_options = "hold_position")
+                   row_spec(4,    hline_after = T) %>%
+                   row_spec(8,    hline_after = T) %>%
+                   row_spec(12,   hline_after = T) %>%  
+                   column_spec(5, width  = "1.2cm") %>%  
+       kableExtra::kable_styling(font_size = 9.5, position = "left",latex_options = "hold_position")
 
 ```
 \ \
@@ -62,8 +70,8 @@
                            "group by Year, DEPTH_STRATUM, SPATIAL_STRATUM ",
                            "having (Year = ", yr, " )", sep="")
        #surv.strata <- GetSQLData(act.strata,"Sablefish")
-       #write.table(surv.strata, file = paste(path,"table02.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
-       surv.strata <-  read.csv(paste(path,'table02.csv',sep=''), header=T)
+       #write.table(surv.strata, file = paste(path,"table2.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+       surv.strata <-  read.csv(paste(path,'table2.csv',sep=''), header=T)
 
        RD1      <- c(7,7,14,6,7,41)
        RD1fish  <- surv.strata$sets[surv.strata$DEPTH_STRATUM =="RD1"]
@@ -102,32 +110,35 @@
               row_spec(0, color="black") %>%
               row_spec(6, bold=T) %>%
               add_header_above(c(" "= 1, "Depth Strata" = 6, " " = 2), bold=T) %>%
-       kableExtra::kable_styling(font_size = 10, position = "left",latex_options = "hold_position")
+       kableExtra::kable_styling(font_size = 9.5, position = "left",latex_options = "hold_position")
   
   
 ```
-\ \
-\ \
-(ref:table3Caption) Summary of species captured during the `r yr` survey StRS sets conducted by the `r boat`. No value in the weight column indicates that the catch was not weighed. 
-\ \
-\ \
 
+\ \
+\ \
+(ref:table3Caption) Summary of species captured during the `r yr` survey StRS sets conducted by the `r boat`. 
 
 ```{r table3,  echo=FALSE}
 
     options(knitr.kable.NA = '')
-    dtSP   <- paste("exec procRReport_SpeciesSummary ",yr," ,'StRS'",sep="")
+    dtSP    <- paste("exec procRReport_SpeciesSummary ", yr," ,'StRS'",sep="")
     #datSP  <- GetSQLData(dtSP,"Sablefish")
-    #write.table(datSP, file = paste(path,"table03.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
-    datSP  <-  read.csv(paste(path,'table03.csv',sep=''), header=T)
-       
+    #write.table(datSP, file = paste(path,"table3.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+    datSP  <-  read.csv(paste(path,'table3.csv',sep=''), header=T)
+    datSP$Total_weight     <- formatC(datSP$Total_weight, format="d", big.mark=",") 
+ 
+    
     dat1SP <- datSP[,c(-1)] 
     dat1SP <- dat1SP[,c(-3)]
     dat1SP <- dat1SP[,c(-2)]
     dat1SP <- dat1SP[,c(-6)]  # trim columns
     cleandataSP<-dat1SP
-    cleandataSP$Summary_sp <- cleanf(cleandataSP$Summary_sp)  #  remove duplicates function
-    colnames(cleandataSP)  <- c( "Category", "Common Name", "Scientific Name" , "Count", "Weight(kg)")
+    cleandataSP$Summary_sp    <- cleanf(cleandataSP$Summary_sp)  #  remove duplicates function
+    cleandataSP$Total_weight      <- gsub("NA", "", cleandataSP$Total_weight)
+    cleandataSP[20,2]  <- "Rockfish"
+
+    colnames(cleandataSP)     <- c( "Category", "Common Name", "Scientific Name" , "Count", "Weight(kg)")
     
     kableExtra::kable(cleandataSP,
                       booktabs = TRUE,linesep = "",
@@ -146,64 +157,70 @@
                               )
    
 ```
-(ref:table4Caption) Summary of species captured by the `r boat` during the `r yr` survey standardized sets conducted at mainland inlet localities. Null values indicate the catch was not counted or weighed.  No value in both weight and count indicates trace weights of less than 1 kg recorded.
+\ \
+\ \
+(ref:table4Caption) Summary of species captured by the `r boat` during the `r yr` survey standardized sets conducted at mainland inlet localities. 
 \ \
 \ \
 
 ```{r table4, echo=FALSE}
 
   options(knitr.kable.NA = '')
-  dtSP   <- paste("exec procRReport_SpeciesSummary ",yr," ,'INLET STANDARDIZED'",sep="")
-  #datSP  <- GetSQLData(dtSP,"Sablefish")
-  #write.table(datSP, file = paste(path,"table04.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
-  datSP   <-  read.csv(paste(path,'table04.csv',sep=''),header=T)
+  data.inlet   <- paste("exec procRReport_SpeciesSummary ",yr," ,'INLET STANDARDIZED'",sep="")
+  #inlet.species      <-  GetSQLData(data.inlet,"Sablefish")
+  #write.table(inlet.species, file = paste(path,"table4.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+  inlet.species       <-  read.csv(paste(path,'table4.csv',sep=''),header=T)
+  inlet.species$Total_weight  <-  formatC(inlet.species$Total_weight, format="d", big.mark=",") 
   
-  dat1SP <- datSP[,c(-1)] 
-  dat1SP <- dat1SP[,c(-3)]
-  dat1SP <- dat1SP[,c(-2)]
-  dat1SP <- dat1SP[,c(-6)]
-  cleandataSPi<-dat1SP
-  cleandataSPi$Summary_sp <- cleanf(cleandataSPi$Summary_sp)  #use the remove duplicates function
-  colnames(cleandataSPi)  <- c( "Category", "Common Name", "Scientific Name" , "Count", "Weight(kg)")
+  inlet.species.table <- inlet.species[,c(-1,-3,-4,-9)]
+  
+  inlet.species.table$Summary_sp  <- cleanf(inlet.species.table$Summary_sp)  #use the remove duplicates function
+  inlet.species.table$Total_weight <- gsub("NA", "", inlet.species.table$Total_weight)
+  
+  colnames(inlet.species.table)   <- c( "Category", "Common Name", "Scientific Name" , "Count", "Weight(kg)")
 
-  kableExtra::kable(cleandataSPi,
-                    booktabs = TRUE,linesep = "",
+  kableExtra::kable(inlet.species.table,
+                    booktabs = TRUE, linesep = "",
                     format = "latex",  caption = "(ref:table4Caption)") %>%
-                    row_spec(0,    bold = T) %>%
+                    row_spec(0,  bold = T) %>%
                     row_spec(4,  hline_after = T) %>%
                     row_spec(8,  hline_after = T) %>%
-                    row_spec(11,  hline_after = T) %>%
+                    row_spec(11, hline_after = T) %>%
   kableExtra::kable_styling(font_size = 8, position = "left",latex_options = "hold_position")
 
 ```
-
-(ref:table5Caption) Summary of species captured by the `r boat` during the `r yr` survey Total count and weight of species captured during the 2012 survey at the exploratory sites.  
+\clearpage
+(ref:table5Caption) Summary of species captured by the `r boat` during the `r yr` survey from exploratory and camera sets.  
 \ \
 \ \
 
 ```{r table5, echo=FALSE}
 
   options(knitr.kable.NA = '')
-  Category   <- c("Roundfish species",
-                  "Rockfish species") 
-  CommonName <- c("Sablefish",
-                  "Pacific ocean perch")
+  SetType         <-  c("Exploratory",
+                        "",
+                        "Camera")
+  Category        <-  c("Roundfish species",
+                        "Rockfish species",
+                        "Roundfish species") 
+  CommonName      <-  c("Sablefish",
+                        "Pacific ocean perch",
+                        "Sablefish")
   ScientificName  <-  c("ANOPLOPOMA FIMBRIA",
-                        "SEBASTES ALUTUS")
-  TotalCnt<- c("1","1")
-  Totalwt <- c("3","1")
-  component               <-   data.frame(Category, CommonName, ScientificName, TotalCnt, Totalwt)
-  colnames(component)  <-   c( "Category", "Common Name", "Scientific Name" , "Count", "Weight(kg)")
+                        "SEBASTES ALUTUS",
+                        "ANOPLOPOMA FIMBRIA")
+  TotalCnt   <- c("1","1","1")
+
+  component            <-   data.frame(SetType,Category, CommonName, ScientificName, TotalCnt)
+  colnames(component)  <-   c( "Set Type", "Category", "Common Name", "Scientific Name" , "Count")
   
 
   kableExtra::kable(component,
                     booktabs = TRUE,linesep = "",
                     format = "latex",  caption = "(ref:table5Caption)") %>%
                     row_spec(0,  bold = T) %>%
-                    row_spec(4,  hline_after = T) %>%
-                    row_spec(8,  hline_after = T) %>%
-                    row_spec(11, hline_after = T) %>%
-  kableExtra::kable_styling(font_size = 9, position = "left",latex_options = "hold_position")
+                    row_spec(2,  hline_after = T) %>%
+  kableExtra::kable_styling(font_size = 9.5, position = "left",latex_options = "hold_position")
 
 
 
@@ -216,17 +233,18 @@
 
 ```{r table6, echo=FALSE}
 
-    #newdata2   <-   rbind(newdata,biosumm)
+
     newdata2    <-   newdata  # created in results section
 
     kableExtra::kable(newdata2, row.names = FALSE,
                 booktabs = TRUE,   linesep = "",
-                format = "latex",  caption = "(ref:table6Caption)") %>% 
-    add_header_above(c("Depth Strata/Locality"= 2,
+                format = "latex",  caption = "(ref:table6Caption)") %>%
+      
+    add_header_above(c( "Strata"= 2,
                         "Proportion" = 2, 
                         "Mean Fork Length (mm)" = 3),bold=T) %>%
       
-    kableExtra::kable_styling(font_size = 9, position = "left", latex_options = "hold_position") %>%
+    kableExtra::kable_styling(font_size = 9.5, position = "left", latex_options = "hold_position") %>%
                 row_spec(0,    bold = T) %>%
                 row_spec(3,    hline_after = T) %>%
                 row_spec(4,    bold = T, hline_after = T) %>%
@@ -242,22 +260,54 @@
 ```
 \clearpage
 
-
-(ref:table7Caption) Sablefish tag recovery counts by distance from release site and years at liberty before re-release for the 2020 survey. Distances were determined using the great circle distance between the survey release location and survey recovery location.
+(ref:table7Caption) Sablefish tag recovery counts by distance from release site and years at liberty from tags recovered on the `r yr` survey. Distances were determined using the great circle distance between the survey release location and survey recovery location.
 \ \
 \ \
 
+```{r table7, echo=FALSE, warning=FALSE}
 
-```{r table7, echo=FALSE}
-
-       # in('A00545713','A00984002','A00254854') 3 tags re-released twice
-       # in('A00733036','A00315966','A00550705')
-      # in('A00545713','A00984002','A00254854','A00733036','A00315966','A00550705') 
-
-      tag  <- paste("select * from Report_Survey_Tag_Recoveries",sep="") # have to go in database and change the year value
-      #tag.rec <- GetSQLData(tag,"FishTag")
-      #write.table(tag.rec, file = paste(path,"table06.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
-      tag.rec <-  read.csv(paste(path,'table06.csv',sep=''), header=T)
+      # same as Report_Survey_Tag_Recoveries in FishTag database
+      tag  <- paste("SELECT YearGroups, MIN(CASE [Distance Group] WHEN '1.  <10 km' THEN CountTags END) AS [<10 km], ", 
+                    "MIN(CASE [Distance Group] WHEN '2.  11-50 km' THEN CountTags END) AS [11-50 km], ", 
+                    "MIN(CASE [Distance Group] WHEN '3.  51-100 km' THEN CountTags END) AS [51-100 km], ", 
+                    "MIN(CASE [Distance Group] WHEN '4.  101-250 km' THEN CountTags END) AS [101-250 km], ", 
+                    "MIN(CASE [Distance Group] WHEN '5.  251-500 km' THEN CountTags END) AS [251-500 km], ", 
+                    "MIN(CASE [Distance Group] WHEN '6.  501-1000 km' THEN CountTags END) AS [501-1000 km], ", 
+                    "MIN(CASE [Distance Group] WHEN '7.  >1000 km' THEN CountTags END) AS [>1000 km] ", 
+                    "    FROM (SELECT dbo.DistTravel(TravelDistance) AS [Distance Group], ",
+                    "dbo.DistTravelYearGrp(YearSpread) AS YearGroups, COUNT(release_tag) AS CountTags ",
+                    "FROM (SELECT SUM(DISTANCE) AS TravelDistance, SUM(YearSpread) AS YearSpread, release_tag ",
+                    "FROM (SELECT GIS_Release_Recovery_Distance_vw_1.TAG_ID, GIS_Release_Recovery_Distance_vw_1.RELEASE_YR,  ",
+                    "GIS_Release_Recovery_Distance_vw_1.RECOVERY_YR,dbo.GIS_Release_Recovery_Distance_vw.RECOVERY_TAG AS release_tag,",                       
+                    "GIS_Release_Recovery_Distance_vw_1.RECOVERY_TAG,GIS_Release_Recovery_Distance_vw_1.PREVIOUS_TAG_NUMBER, ",
+                    "GIS_Release_Recovery_Distance_vw_1.RELEASE_EVENT, GIS_Release_Recovery_Distance_vw_1.RECOVERY_EVENT, ",
+                    "GIS_Release_Recovery_Distance_vw_1.Release_Length, GIS_Release_Recovery_Distance_vw_1.Recovery_Length, ",
+                    "GIS_Release_Recovery_Distance_vw_1.REL_MAJOR, ",
+                    "GIS_Release_Recovery_Distance_vw_1.REL_LAT, GIS_Release_Recovery_Distance_vw_1.REL_LON, ",
+                    "GIS_Release_Recovery_Distance_vw_1.REC_LAT, GIS_Release_Recovery_Distance_vw_1.REC_LON, ",
+                    "GIS_Release_Recovery_Distance_vw_1.REC_SEAM, GIS_Release_Recovery_Distance_vw_1.REC_MAJOR, ",
+                    "GIS_Release_Recovery_Distance_vw_1.DISTANCE, GIS_Release_Recovery_Distance_vw_1.RECOVERY_MONTH, ",
+                    "GIS_Release_Recovery_Distance_vw_1.lineseg, GIS_Release_Recovery_Distance_vw_1.SEAMOUNT_IND, ",
+                    "GIS_Release_Recovery_Distance_vw_1.RECAPTURE_FISH_ID, ",
+                    "dbo.GIS_Release_Recovery_Distance_vw.RECOVERY_YR - dbo.GIS_Release_Recovery_Distance_vw.RELEASE_YR AS YearSpread ",
+                    "    FROM dbo.GIS_Release_Recovery_Distance_vw INNER JOIN  ",
+                    "dbo.GIS_Release_Recovery_Distance_vw AS GIS_Release_Recovery_Distance_vw_1 ON   ",
+                    "dbo.GIS_Release_Recovery_Distance_vw.PREVIOUS_TAG_NUMBER = GIS_Release_Recovery_Distance_vw_1.RELEASE_TAG  ",
+                    "WHERE (dbo.GIS_Release_Recovery_Distance_vw.RECOVERY_YR = 2012) ",
+                    "UNION  ",
+                    "SELECT  TAG_ID, RELEASE_YR, RECOVERY_YR, RELEASE_TAG, RECOVERY_TAG, PREVIOUS_TAG_NUMBER,   ",
+                    "RELEASE_EVENT, RECOVERY_EVENT, Release_Length, Recovery_Length,   ",
+                    "REL_MAJOR, REL_LAT, REL_LON, REC_LAT, REC_LON, REC_SEAM, REC_MAJOR, DISTANCE,   ",
+                    "RECOVERY_MONTH, lineseg, SEAMOUNT_IND, RECAPTURE_FISH_ID,   ",
+                    "RECOVERY_YR - RELEASE_YR AS YearSpread  ",
+                    "FROM  dbo.GIS_Release_Recovery_Distance_vw AS GIS_Release_Recovery_Distance_vw_2  ",
+                    "WHERE   (RECOVERY_YR = 2012) AND (NOT (RECAPTURE_FISH_ID IS NULL)) ) AS TAG01  ",
+                    "GROUP BY release_tag) AS TAG02  ",
+                    "GROUP BY dbo.DistTravel(TravelDistance), dbo.DistTravelYearGrp(YearSpread)) AS TAG03  ",
+                    "GROUP BY YearGroups", sep="")
+      tag.rec <- GetSQLData(tag,"FishTag")
+      write.table(tag.rec, file = paste(path,"table7.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+      tag.rec <-  read.csv(paste(path,'table7.csv',sep=''), header=T)
       
       tag.rec[is.na(tag.rec)] <- 0   # convert NA to zero in whole table
       tag.rec$YearGroups      <- as.character(tag.rec$YearGroups)  # change column to character
@@ -281,11 +331,12 @@
                         "Distance (km) from Release Location" = 7, 
                         " " = 1),bold=T) %>% 
       
-       kableExtra::kable_styling(font_size = 9, position = "left", latex_options = "hold_position") %>%
+       kableExtra::kable_styling(font_size = 9.5, position = "left", latex_options = "hold_position") %>%
                 row_spec(0,    bold = T) %>%
-                row_spec(4, hline_after = T) %>%
-                column_spec(2, width  = "1.1cm") 
-
+                row_spec(6,    bold = T) %>%
+                row_spec(5, hline_after = T) %>%
+                column_spec(2, width  = "1.1cm")%>%
+                column_spec(9, width  = "1.2cm")  
 ```
 \ \
 \ \
@@ -295,53 +346,65 @@
 
 ```{r table8, echo=FALSE}
 
-     query  <- paste("select DATENAME(mm,GFBioSQL.dbo.SAMPLE.SAMPLE_DATE) + ' '+  ",
-               "cast(day(GFBioSQL.dbo.SAMPLE.SAMPLE_DATE) as varchar) +','+ ",
-               "cast(year(GFBioSQL.dbo.SAMPLE.SAMPLE_DATE) as varchar) as Date,  ",
-               "GFBioSQL.dbo.FISHING_EVENT.FE_MAJOR_LEVEL_ID as [Set],  ",
-               "GFBioSQL.dbo.SPECIMEN.PRIMARY_TAG_NUMBER AS [Tube label - tag number],  ",
-               "GFBioSQL.dbo.SPECIMEN_MORPHOMETRICS.SPECIMEN_MORPHOMETRICS_VALUE AS [Precaudal length (mm)],  ",
-               "LEFT(MAJOR_STAT_AREA_1.MAJOR_STAT_AREA_NAME, 2) AS [Release Area],   ",
-               "GFBioSQL.dbo.SPECIMEN.SPECIMEN_ID as [GFBio Specimen id]  ",
-               "from  GFBioSQL.dbo.TRIP INNER JOIN  ",
-               "GFBioSQL.dbo.FISHING_EVENT ON GFBioSQL.dbo.TRIP.TRIP_ID = GFBioSQL.dbo.FISHING_EVENT.TRIP_ID INNER JOIN   ",
-               "GFBioSQL.dbo.FISHING_EVENT_CATCH ON GFBioSQL.dbo.FISHING_EVENT.FISHING_EVENT_ID = GFBioSQL.dbo.FISHING_EVENT_CATCH.FISHING_EVENT_ID INNER JOIN   ",
-               "GFBioSQL.dbo.CATCH ON GFBioSQL.dbo.FISHING_EVENT_CATCH.CATCH_ID = GFBioSQL.dbo.CATCH.CATCH_ID INNER JOIN   ",
-               "GFBioSQL.dbo.MAJOR_STAT_AREA ON GFBioSQL.dbo.FISHING_EVENT.MAJOR_STAT_AREA_CODE = GFBioSQL.dbo.MAJOR_STAT_AREA.MAJOR_STAT_AREA_CODE INNER JOIN   ",
-               "GFBioSQL.dbo.CATCH_SAMPLE ON GFBioSQL.dbo.CATCH.CATCH_ID = GFBioSQL.dbo.CATCH_SAMPLE.CATCH_ID INNER JOIN   ",
-               "GFBioSQL.dbo.SAMPLE ON GFBioSQL.dbo.CATCH_SAMPLE.SAMPLE_ID = GFBioSQL.dbo.SAMPLE.SAMPLE_ID INNER JOIN  ",
-               "GFBioSQL.dbo.SPECIMEN ON GFBioSQL.dbo.SAMPLE.SAMPLE_ID = GFBioSQL.dbo.SPECIMEN.SAMPLE_ID INNER JOIN  ",
-               "GFBioSQL.dbo.MAJOR_STAT_AREA AS MAJOR_STAT_AREA_1 ON GFBioSQL.dbo.FISHING_EVENT.MAJOR_STAT_AREA_CODE =   ",
-               "MAJOR_STAT_AREA_1.MAJOR_STAT_AREA_CODE INNER JOIN  ",
-               "GFBioSQL.dbo.SPECIMEN_MORPHOMETRICS ON GFBioSQL.dbo.SPECIMEN.SPECIMEN_ID = GFBioSQL.dbo.SPECIMEN_MORPHOMETRICS.SPECIMEN_ID  ",
-               "where  (GFBioSQL.dbo.FISHING_EVENT.FE_SUB_LEVEL_ID IS NULL)  ",
-               "GROUP BY YEAR(GFBioSQL.dbo.TRIP.TRIP_START_DATE), GFBioSQL.dbo.TRIP.TRIP_ID,   ",
-               "GFBioSQL.dbo.FISHING_EVENT.FE_MAJOR_LEVEL_ID, GFBioSQL.dbo.CATCH.SPECIES_CODE,   ",
-               "GFBioSQL.dbo.SPECIMEN.PRIMARY_TAG_NUMBER, GFBioSQL.dbo.FISHING_EVENT.FISHING_EVENT_ID,   ",
-               "GFBioSQL.dbo.CATCH.CATCH_ID, GFBioSQL.dbo.SAMPLE.SAMPLE_ID, GFBioSQL.dbo.SPECIMEN.SPECIMEN_ID,   ",
-               "GFBioSQL.dbo.SAMPLE.SAMPLE_DATE, GFBioSQL.dbo.SPECIMEN_MORPHOMETRICS.SPECIMEN_MORPHOMETRICS_VALUE,   ",
-               "LEFT(MAJOR_STAT_AREA_1.MAJOR_STAT_AREA_NAME, 2)   ",
-               "having (GFBioSQL.dbo.CATCH.SPECIES_CODE = '044') AND (GFBioSQL.dbo.TRIP.TRIP_ID = 73190)   ", 
-               "AND (NOT (GFBioSQL.dbo.SPECIMEN.PRIMARY_TAG_NUMBER IS NULL))  ",
-               "ORDER BY GFBioSQL.dbo.FISHING_EVENT.FE_MAJOR_LEVEL_ID", sep='')
+     query  <- paste( "SELECT DATENAME(mm, GFBioSQL.dbo.SAMPLE.SAMPLE_DATE) + ' ' + ",
+                      "CAST(DAY(GFBioSQL.dbo.SAMPLE.SAMPLE_DATE) AS varchar) + ',' +  ",
+                      "CAST(YEAR(GFBioSQL.dbo.SAMPLE.SAMPLE_DATE) AS varchar) AS Date,  ",
+                      "GFBioSQL.dbo.FISHING_EVENT.FE_MAJOR_LEVEL_ID AS [Set],  ",
+                      "GFBioSQL.dbo.SPECIMEN.PRIMARY_TAG_NUMBER AS [Tube label - tag number],  ",
+                      "GFBioSQL.dbo.SPECIMEN_MORPHOMETRICS.SPECIMEN_MORPHOMETRICS_VALUE AS [Precaudal length (mm)],  ",
+                      "LEFT(MAJOR_STAT_AREA_1.MAJOR_STAT_AREA_NAME, 2) AS [Release GMU Area],  ",
+                      "dbo.GFBIO_RESEARCH_TRIPS.SPATIAL_STRATUM AS [Release Spatial Strata],  ",
+                      "GFBioSQL.dbo.SPECIMEN.SPECIMEN_ID AS [GFBio Specimen id] ",
+                      "FROM GFBioSQL.dbo.TRIP INNER JOIN ",
+                      "GFBioSQL.dbo.FISHING_EVENT ON GFBioSQL.dbo.TRIP.TRIP_ID = GFBioSQL.dbo.FISHING_EVENT.TRIP_ID INNER JOIN ",
+                      "GFBioSQL.dbo.FISHING_EVENT_CATCH ON GFBioSQL.dbo.FISHING_EVENT.FISHING_EVENT_ID =  ",
+                      "GFBioSQL.dbo.FISHING_EVENT_CATCH.FISHING_EVENT_ID INNER JOIN ",
+                      "GFBioSQL.dbo.CATCH ON GFBioSQL.dbo.FISHING_EVENT_CATCH.CATCH_ID = GFBioSQL.dbo.CATCH.CATCH_ID INNER JOIN ",
+                      "GFBioSQL.dbo.MAJOR_STAT_AREA ON GFBioSQL.dbo.FISHING_EVENT.MAJOR_STAT_AREA_CODE =  ",
+                      "GFBioSQL.dbo.MAJOR_STAT_AREA.MAJOR_STAT_AREA_CODE INNER JOIN ",
+                      "GFBioSQL.dbo.CATCH_SAMPLE ON GFBioSQL.dbo.CATCH.CATCH_ID = GFBioSQL.dbo.CATCH_SAMPLE.CATCH_ID INNER JOIN ",
+                      "GFBioSQL.dbo.SAMPLE ON GFBioSQL.dbo.CATCH_SAMPLE.SAMPLE_ID = GFBioSQL.dbo.SAMPLE.SAMPLE_ID INNER JOIN ",
+                      "GFBioSQL.dbo.SPECIMEN ON GFBioSQL.dbo.SAMPLE.SAMPLE_ID = GFBioSQL.dbo.SPECIMEN.SAMPLE_ID INNER JOIN ",
+                      "GFBioSQL.dbo.MAJOR_STAT_AREA AS MAJOR_STAT_AREA_1 ON GFBioSQL.dbo.FISHING_EVENT.MAJOR_STAT_AREA_CODE =  ",
+                      "MAJOR_STAT_AREA_1.MAJOR_STAT_AREA_CODE INNER JOIN ",
+                      "GFBioSQL.dbo.SPECIMEN_MORPHOMETRICS ON GFBioSQL.dbo.SPECIMEN.SPECIMEN_ID =  ",
+                      "GFBioSQL.dbo.SPECIMEN_MORPHOMETRICS.SPECIMEN_ID INNER JOIN ",
+                      "dbo.GFBIO_RESEARCH_TRIPS ON GFBioSQL.dbo.FISHING_EVENT.TRIP_ID = dbo.GFBIO_RESEARCH_TRIPS.TRIP_ID AND  ",
+                      "GFBioSQL.dbo.FISHING_EVENT.FE_MAJOR_LEVEL_ID = dbo.GFBIO_RESEARCH_TRIPS.[SET] ",
+                      "WHERE  (GFBioSQL.dbo.FISHING_EVENT.FE_SUB_LEVEL_ID IS NULL) ",
+                      "GROUP BY YEAR(GFBioSQL.dbo.TRIP.TRIP_START_DATE), GFBioSQL.dbo.TRIP.TRIP_ID,  ",
+                      "GFBioSQL.dbo.FISHING_EVENT.FE_MAJOR_LEVEL_ID, GFBioSQL.dbo.CATCH.SPECIES_CODE,  ",
+                      "GFBioSQL.dbo.SPECIMEN.PRIMARY_TAG_NUMBER, GFBioSQL.dbo.FISHING_EVENT.FISHING_EVENT_ID,  ",
+                      "GFBioSQL.dbo.CATCH.CATCH_ID, GFBioSQL.dbo.SAMPLE.SAMPLE_ID, GFBioSQL.dbo.SPECIMEN.SPECIMEN_ID,  ",
+                      "GFBioSQL.dbo.SAMPLE.SAMPLE_DATE, GFBioSQL.dbo.SPECIMEN_MORPHOMETRICS.SPECIMEN_MORPHOMETRICS_VALUE,  ",
+                      "LEFT(MAJOR_STAT_AREA_1.MAJOR_STAT_AREA_NAME, 2), dbo.GFBIO_RESEARCH_TRIPS.SPATIAL_STRATUM ",
+                      "HAVING (GFBioSQL.dbo.CATCH.SPECIES_CODE = '044') AND (GFBioSQL.dbo.TRIP.TRIP_ID = 73190) AND  ",
+                      "(NOT (GFBioSQL.dbo.SPECIMEN.PRIMARY_TAG_NUMBER IS NULL)) ",
+                      "ORDER BY [Set]", sep='')
 
-    #popoff.tags <- GetSQLData(query,"Sablefish")
-    #write.table(popoff.tags, file = paste(path,"table07.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
-     popoff.tags <-  read.csv(paste(path,'table07.csv',sep=''), header=T)
+     #popoff.tags <- GetSQLData(query,"Sablefish")
+     #write.table(popoff.tags, file = paste(path,"table8.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+     popoff.tags <-  read.csv(paste(path,'table8.csv',sep=''), header=T)
      
-     names(popoff.tags) <- c("Date","Set","Tube-tag ID","Precaudal length (mm)","Release Area","GFBio Specimen ID")
+     names(popoff.tags) <- c("Date","Set","Tube-tag ID","Precaudal length (mm)","Release GMU Area","Release Spatial Strata","GFBio Specimen ID")
     
      kableExtra::kable(popoff.tags, row.names = FALSE,
                 align=c('l', 'c','l','l','l','c'),
                 booktabs = TRUE,   linesep = "",
                 format = "latex",  caption = "(ref:table8Caption)") %>% 
 
-       kableExtra::kable_styling(font_size = 9, position = "left", latex_options = "hold_position") %>%
+       kableExtra::kable_styling(font_size = 9.5, position = "left", latex_options = "hold_position") %>%
                 row_spec(0,    bold = T) %>%
                 column_spec(1, width  = "2.7cm") %>%
                 column_spec(2, width  = "0.7cm") %>%
                 column_spec(3, width  = "2.7cm") %>%
                 column_spec(4, width  = "1.2cm") %>%
-                column_spec(5, width  = "1.7cm")      
+                column_spec(5, width  = "1.2cm") %>%
+                column_spec(6, width  = "1.7cm") %>%
+                column_spec(7, width  = "1.8cm")
 ```
 \clearpage
+
+
+
+
